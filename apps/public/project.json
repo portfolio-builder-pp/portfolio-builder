@@ -1,16 +1,16 @@
 {
-  "name": "client",
+  "name": "public",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/client/src",
+  "sourceRoot": "apps/public/src",
   "projectType": "application",
-  "implicitDependencies": ["server", "shared-ui"],
+  "implicitDependencies": ["api", "shared-ui"],
   "targets": {
     "build": {
       "executor": "@nx/vite:build",
       "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
       "options": {
-        "outputPath": "dist/apps/client"
+        "outputPath": "dist/apps/public"
       },
       "configurations": {
         "development": {
@@ -25,15 +25,15 @@
       "executor": "@nx/vite:dev-server",
       "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "client:build"
+        "buildTarget": "public:build"
       },
       "configurations": {
         "development": {
-          "buildTarget": "client:build:development",
+          "buildTarget": "public:build:development",
           "hmr": true
         },
         "production": {
-          "buildTarget": "client:build:production",
+          "buildTarget": "public:build:production",
           "hmr": false
         }
       }
@@ -42,14 +42,14 @@
       "executor": "@nx/vite:preview-server",
       "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "client:build"
+        "buildTarget": "public:build"
       },
       "configurations": {
         "development": {
-          "buildTarget": "client:build:development"
+          "buildTarget": "public:build:development"
         },
         "production": {
-          "buildTarget": "client:build:production"
+          "buildTarget": "public:build:production"
         }
       }
     },
@@ -58,20 +58,20 @@
       "outputs": ["{options.reportsDirectory}"],
       "options": {
         "passWithNoTests": true,
-        "reportsDirectory": "../../coverage/apps/client"
+        "reportsDirectory": "../../coverage/apps/public"
       }
     },
     "lint": {
       "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["apps/client/**/*.{ts,tsx,js,jsx}"]
+        "lintFilePatterns": ["apps/public/**/*.{ts,tsx,js,jsx}"]
       }
     },
     "serve-static": {
       "executor": "@nx/web:file-server",
       "options": {
-        "buildTarget": "client:build"
+        "buildTarget": "public:build"
       }
     }
   },
