@@ -4,10 +4,9 @@
   "license": "MIT",
   "scripts": {
     "graph": "nx graph",
-    "serve:api": "nx serve api --host=0.0.0.0 --poll 2000",
+    "serve:api": "nx serve api --host=0.0.0.0",
     "serve:dashboard": "nx serve dashboard --host=0.0.0.0",
-    "serve:public": "nx serve public --host=0.0.0.0",
-    "docker:serve": "docker-compose pull && docker-compose -f ./docker-compose.yml up --build"
+    "serve:public": "nx serve public --host=0.0.0.0"
   },
   "private": true,
   "dependencies": {
