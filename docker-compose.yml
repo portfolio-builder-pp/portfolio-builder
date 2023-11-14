@@ -17,6 +17,7 @@ services:
       - backend
 
   api:
+    container_name: portfolio-builder-api
     restart: unless-stopped
     build: .
     depends_on:
@@ -39,6 +40,7 @@ services:
       - frontend
 
   dashboard:
+    container_name: portfolio-builder-dashboard
     restart: unless-stopped
     build: .
     depends_on:
@@ -55,6 +57,7 @@ services:
       - frontend
 
   public:
+    container_name: portfolio-builder-public
     restart: unless-stopped
     build: .
     depends_on:
