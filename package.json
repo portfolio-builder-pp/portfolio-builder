@@ -3,8 +3,10 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "serve": "nx run-many --target=serve --all",
-    "graph": "nx graph"
+    "graph": "nx graph",
+    "serve:api": "nx serve api --host=0.0.0.0",
+    "serve:dashboard": "nx serve dashboard --host=0.0.0.0",
+    "serve:public": "nx serve public --host=0.0.0.0"
   },
   "private": true,
   "dependencies": {

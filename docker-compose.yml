@@ -1,0 +1,82 @@
+version: '3.8'
+
+services:
+  database:
+    image: mysql:5.7
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: $MYSQL_DB_NAME
+      MYSQL_USER: $MYSQL_USER
+      MYSQL_PASSWORD: $MYSQL_PASSWORD
+      MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
+    ports:
+      - $MYSQL_EXPOSED_PORT:$MYSQL_DOCKER_PORT
+    volumes:
+      - database-volume:/var/lib/mysql
+    networks:
+      - backend
+
+  api:
+    container_name: portfolio-builder-api
+    restart: unless-stopped
+    build: .
+    depends_on:
+      - database
+    command: npm run serve:api
+    environment:
+      DB_HOST: $MYSQL_HOST
+      DB_PORT: $MYSQL_EXPOSED_PORT
+      DB_NAME: $MYSQL_DB_NAME
+      DB_USER: $MYSQL_USER
+      DB_PASSWORD: $MYSQL_PASSWORD
+      DASHBOARD_APP_ORIGIN: $DASHBOARD_APP_ORIGIN
+      PUBLIC_APP_ORIGIN: $PUBLIC_APP_ORIGIN
+    ports:
+      - $API_EXPOSED_PORT:$API_DOCKER_PORT
+    volumes:
+      - node-modules-volume:/app/node_modules
+    networks:
+      - backend
+      - frontend
+
+  dashboard:
+    container_name: portfolio-builder-dashboard
+    restart: unless-stopped
+    build: .
+    depends_on:
+      - api
+    command: npm run serve:dashboard
+    environment:
+      API_BASE_URL: $API_BASE_URL
+      CHOKIDAR_USEPOLLING: true # Hot Module Reload (HMR)
+    ports:
+      - $DASHBOARD_EXPOSED_PORT:$DASHBOARD_DOCKER_PORT
+    volumes:
+      - node-modules-volume:/app/node_modules
+    networks:
+      - frontend
+
+  public:
+    container_name: portfolio-builder-public
+    restart: unless-stopped
+    build: .
+    depends_on:
+      - api
+    command: npm run serve:public
+    environment:
+      API_BASE_URL: $API_BASE_URL
+      CHOKIDAR_USEPOLLING: true # Hot Module Reload (HMR)
+    ports:
+      - $PUBLIC_EXPOSED_PORT:$PUBLIC_DOCKER_PORT
+    volumes:
+      - node-modules-volume:/app/node_modules
+    networks:
+      - frontend
+
+volumes:
+  node-modules-volume:
+  database-volume:
+
+networks:
+  backend:
+  frontend:

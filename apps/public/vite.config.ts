@@ -7,7 +7,7 @@ export default defineConfig({
   cacheDir: '../../node_modules/.vite/client',
 
   server: {
-    port: 4200,
+    port: Number(process.env.PUBLIC_DOCKER_PORT || 4202),
     host: 'localhost',
   },
 
