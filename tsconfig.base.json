@@ -15,11 +15,13 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@portfolio-builder/shared-ui": ["libs/shared/ui/src/index.ts"]
+      "@portfolio-builder/shared-ui": ["libs/shared/ui/src/index.ts"],
+      "@portfolio-builder/shared-types": ["libs/shared/types/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"],
   "paths": {
-    "@portfolio-builder/shared-ui": ["libs/shared/ui/src/index.ts"]
+    "@portfolio-builder/shared-ui": ["libs/shared/ui/src/index.ts"],
+    "@portfolio-builder/shared-types": ["libs/shared/types/src/index.ts"]
   }
 }
