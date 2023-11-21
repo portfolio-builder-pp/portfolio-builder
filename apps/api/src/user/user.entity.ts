@@ -3,8 +3,8 @@ import { InternalUserDto } from '@portfolio-builder/shared-types';
 
 @Entity()
 export class User implements InternalUserDto {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column()
   firstName: string;
