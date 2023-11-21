@@ -5,4 +5,4 @@ export interface InternalUserDto extends UserDto {
   password: string;
 }
 
-export type CreateUserDto = Omit<InternalUserDto, 'salt'>;
+export type CreateUserDto = Omit<InternalUserDto, 'id' | 'salt'>;

@@ -14,15 +14,16 @@ export class UserService {
     return this.usersRepository.find({});
   }
 
-  findOne(id: number): Promise<InternalUserDto | null> {
+  findOne(id: string): Promise<InternalUserDto | null> {
     return this.usersRepository.findOneBy({ id });
   }
 
-  async create(userDetails: InternalUserDto): Promise<InternalUserDto> {
+  async create(userDetails: Omit<InternalUserDto, 'id'>): Promise<InternalUserDto> {
     return this.usersRepository.save(userDetails);
   }
 
-  async remove(id: number): Promise<void> {
-    await this.usersRepository.delete(id);
+  async remove(id: string): Promise<number | null> {
+    const { affected } = await this.usersRepository.delete(id);
+    return affected ?? null;
   }
 }
