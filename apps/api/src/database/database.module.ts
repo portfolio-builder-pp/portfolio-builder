@@ -12,7 +12,7 @@ import { User } from '../user/user.entity';
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
       entities: [User],
-      synchronize: true, // This should be changed to false once the MVP is done
+      synchronize: process.env.NODE_ENV === 'development',
     })
   ]
 })
