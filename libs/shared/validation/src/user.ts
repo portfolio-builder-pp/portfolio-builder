@@ -1,5 +1,5 @@
-import { CreateUserDto } from '@portfolio-builder/shared-types';
 import { z, ZodType } from 'zod';
+import { CreateUserDto, UserRole } from '@portfolio-builder/shared-types';
 
 export const createUserSchema: ZodType<CreateUserDto> = z
   .object({
@@ -7,5 +7,6 @@ export const createUserSchema: ZodType<CreateUserDto> = z
     lastName: z.string().trim().min(2),
     email: z.string().trim().email(),
     password: z.string().trim().min(6),
+    role: z.nativeEnum(UserRole),
   })
   .strip();
