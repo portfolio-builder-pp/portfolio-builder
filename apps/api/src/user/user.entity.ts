@@ -18,9 +18,6 @@ export class User implements InternalUserDto {
   @Column()
   password: string;
 
-  @Column()
-  salt: string;
-
   @Column({
     type: 'enum',
     enum: UserRole,
