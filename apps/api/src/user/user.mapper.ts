@@ -9,6 +9,7 @@ export class UserMapper {
       firstName: internalUser.firstName,
       lastName: internalUser.lastName,
       email: internalUser.email,
+      role: internalUser.role,
     }
   }
 }
