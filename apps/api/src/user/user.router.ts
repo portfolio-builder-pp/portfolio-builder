@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { createUserSchema, idSchema } from '@portfolio-builder/shared-validation';
+import { emailSchema, idSchema } from '@portfolio-builder/shared-validation';
+import { TrpcService } from '../trpc';
 import { UserService } from './user.service';
 import { UserMapper } from './user.mapper';
-import { TrpcService } from '../trpc/trpc.service';
 
 @Injectable()
 export class UserRouter {
@@ -15,8 +15,8 @@ export class UserRouter {
   public getRouter() {
     return this.trpcService.router({
       findAll: this.findAll(),
-      findOne: this.findOne(),
-      create: this.create(),
+      findById: this.findById(),
+      findByEmail: this.findByEmail(),
       remove: this.remove(),
     })
   }
@@ -29,24 +29,22 @@ export class UserRouter {
       });
   }
 
-  private findOne() {
+  private findById() {
     return this.trpcService.procedure
       .input(idSchema)
       .query(async ({ input }) => {
-        const user = await this.userService.findOne(input.id);
+        const user = await this.userService.findById(input.id);
         return user ? this.userMapper.toExternalUser(user) : null;
       });
   }
 
-  // This is temporary until the auth module gets created
-  create() {
+  private findByEmail() {
     return this.trpcService.procedure
-      .input(createUserSchema)
-      .mutation(async ({ input }) => {
-        const user = await this.userService.create({ ...input, salt: '' });
-        return this.userMapper.toExternalUser(user);
+      .input(emailSchema)
+      .query(async ({ input }) => {
+        const user = await this.userService.findById(input.email);
+        return user ? this.userMapper.toExternalUser(user) : null;
       });
-
   }
 
   remove() {
