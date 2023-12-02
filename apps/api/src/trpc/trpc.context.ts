@@ -1,16 +1,20 @@
 import { CreateExpressContextOptions } from "@trpc/server/adapters/express";
-import { UserDto } from "@portfolio-builder/shared-types";
+import { InternalUserDto, UserRole } from "@portfolio-builder/shared-types";
 
 declare module 'express-session' {
   interface SessionData {
-    user?: UserDto | null,
+    user?: InternalUserDto | null,
   }
 }
 
 export const createContext = ({ req }: CreateExpressContextOptions) => {
+  const { session } = req;
+  const { user } = session;
+
   return {
-    session: req.session,
-    isAuthenticated: !!req.session?.user,
-    role: req.session?.user?.role ?? null,
+    session,
+    user,
+    isAuthenticated: !!user,
+    isAdmin: user?.role === UserRole.Admin,
   }
 }
