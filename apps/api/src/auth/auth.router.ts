@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { TRPCError } from '@trpc/server';
 import { registerSchema, loginSchema } from '@portfolio-builder/shared-validation';
 import { UserMapper } from '../user';
 import { TrpcService } from '../trpc';
@@ -17,6 +18,7 @@ export class AuthRouter {
       login: this.login(),
       register: this.register(),
       logout: this.logout(),
+      userInfo: this.userInfo(),
     });
   }
 
@@ -26,7 +28,12 @@ export class AuthRouter {
       .mutation(async ({ input, ctx }) => {
         const user = await this.authService.login(input);
 
-        if (!user) return null;
+        if (!user) {
+          throw new TRPCError({
+            code: 'UNAUTHORIZED',
+            message: 'Invalid username or password',
+          });
+        }
 
         ctx.session.user = user;
 
@@ -43,10 +50,20 @@ export class AuthRouter {
       });
   }
 
+  private userInfo() {
+    return this.trpcService.procedure
+      .query(({ ctx }) => {
+        const { user } = ctx;
+        return user ? this.userMapper.toExternalUser(user) : null;
+      })
+  }
+
   private logout() {
     return this.trpcService.procedure
-      .query(async ({ ctx }) => {
-        return ctx.session.user = null;
+      .query(({ ctx }) => {
+        ctx.session.user = null;
+
+        return true;
       });
   }
 }

@@ -12,15 +12,11 @@ export class AuthService {
   async login(userDetails: LoginDto): Promise<InternalUserDto | null> {
     const user = await this.userService.findByEmail(userDetails.email);
 
-    if (!user) {
-      return null;
-    }
+    if (!user) return null;
 
-    const validPassword = this.comparePassword(userDetails.password, user.password);
+    const validPassword = await this.comparePassword(userDetails.password, user.password);
 
-    if (!validPassword) {
-      return null;
-    }
+    if (!validPassword) return null;
 
     return user;
   }
