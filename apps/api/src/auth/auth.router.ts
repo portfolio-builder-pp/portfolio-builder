@@ -42,7 +42,7 @@ export class AuthRouter {
   }
 
   private register() {
-    return this.trpcService.procedure
+    return this.trpcService.adminProcedure
       .input(registerSchema)
       .mutation(async ({ input }) => {
         const user = await this.authService.register(input);
@@ -51,7 +51,7 @@ export class AuthRouter {
   }
 
   private userInfo() {
-    return this.trpcService.procedure
+    return this.trpcService.authProcedure
       .query(({ ctx }) => {
         const { user } = ctx;
         return user ? this.userMapper.toExternalUser(user) : null;
@@ -59,7 +59,7 @@ export class AuthRouter {
   }
 
   private logout() {
-    return this.trpcService.procedure
+    return this.trpcService.authProcedure
       .query(({ ctx }) => {
         ctx.session.user = null;
 

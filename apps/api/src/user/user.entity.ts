@@ -23,5 +23,5 @@ export class User implements InternalUserDto {
     enum: UserRole,
     default: UserRole.Moderator
   })
-  role: UserRole
+  role: UserRole;
 }

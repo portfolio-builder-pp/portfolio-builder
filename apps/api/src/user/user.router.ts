@@ -22,7 +22,7 @@ export class UserRouter {
   }
 
   private findAll() {
-    return this.trpcService.procedure
+    return this.trpcService.adminProcedure
       .query(async () => {
         const users = await this.userService.findAll();
         return users.map(this.userMapper.toExternalUser);
@@ -30,7 +30,7 @@ export class UserRouter {
   }
 
   private findById() {
-    return this.trpcService.procedure
+    return this.trpcService.adminProcedure
       .input(idSchema)
       .query(async ({ input }) => {
         const user = await this.userService.findById(input.id);
@@ -39,7 +39,7 @@ export class UserRouter {
   }
 
   private findByEmail() {
-    return this.trpcService.procedure
+    return this.trpcService.adminProcedure
       .input(emailSchema)
       .query(async ({ input }) => {
         const user = await this.userService.findById(input.email);
@@ -47,8 +47,8 @@ export class UserRouter {
       });
   }
 
-  remove() {
-    return this.trpcService.procedure
+  private remove() {
+    return this.trpcService.adminProcedure
       .input(idSchema)
       .mutation(async ({ input }) => {
         return await this.userService.remove(input.id);
