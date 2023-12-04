@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { InternalUserDto } from '@portfolio-builder/shared-types';
+import { InternalUserDto, RegisterDto } from '@portfolio-builder/shared-types';
 import { User } from './user.entity';
 
 @Injectable()
@@ -14,11 +14,16 @@ export class UserService {
     return this.usersRepository.find({});
   }
 
-  findOne(id: string): Promise<InternalUserDto | null> {
+  findById(id: string): Promise<InternalUserDto | null> {
     return this.usersRepository.findOneBy({ id });
   }
 
-  async create(userDetails: Omit<InternalUserDto, 'id'>): Promise<InternalUserDto> {
+  findByEmail(email: string): Promise<InternalUserDto | null> {
+    return this.usersRepository.findOneBy({ email });
+  }
+
+  // Internal use only - user creation should only be handled by the auth service
+  async create(userDetails: RegisterDto): Promise<InternalUserDto> {
     return this.usersRepository.save(userDetails);
   }
 

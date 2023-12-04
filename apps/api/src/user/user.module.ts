@@ -9,6 +9,6 @@ import { TrpcModule } from '../trpc';
 @Module({
   imports: [TypeOrmModule.forFeature([User]), TrpcModule],
   providers: [UserService, UserMapper, UserRouter],
-  exports: [UserService, UserRouter],
+  exports: [UserService, UserMapper, UserRouter],
 })
 export class UserModule {}

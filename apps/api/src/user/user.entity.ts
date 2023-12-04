@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
-import { InternalUserDto } from '@portfolio-builder/shared-types';
+import { InternalUserDto, UserRole } from '@portfolio-builder/shared-types';
 
 @Entity()
 export class User implements InternalUserDto {
@@ -18,6 +18,10 @@ export class User implements InternalUserDto {
   @Column()
   password: string;
 
-  @Column()
-  salt: string;
+  @Column({
+    type: 'enum',
+    enum: UserRole,
+    default: UserRole.Moderator
+  })
+  role: UserRole;
 }

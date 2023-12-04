@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { createUserSchema, idSchema } from '@portfolio-builder/shared-validation';
+import { emailSchema, idSchema } from '@portfolio-builder/shared-validation';
+import { TrpcService } from '../trpc';
 import { UserService } from './user.service';
 import { UserMapper } from './user.mapper';
-import { TrpcService } from '../trpc/trpc.service';
 
 @Injectable()
 export class UserRouter {
@@ -15,42 +15,40 @@ export class UserRouter {
   public getRouter() {
     return this.trpcService.router({
       findAll: this.findAll(),
-      findOne: this.findOne(),
-      create: this.create(),
+      findById: this.findById(),
+      findByEmail: this.findByEmail(),
       remove: this.remove(),
     })
   }
 
   private findAll() {
-    return this.trpcService.procedure
+    return this.trpcService.adminProcedure
       .query(async () => {
         const users = await this.userService.findAll();
         return users.map(this.userMapper.toExternalUser);
       });
   }
 
-  private findOne() {
-    return this.trpcService.procedure
+  private findById() {
+    return this.trpcService.adminProcedure
       .input(idSchema)
       .query(async ({ input }) => {
-        const user = await this.userService.findOne(input.id);
+        const user = await this.userService.findById(input.id);
         return user ? this.userMapper.toExternalUser(user) : null;
       });
   }
 
-  // This is temporary until the auth module gets created
-  create() {
-    return this.trpcService.procedure
-      .input(createUserSchema)
-      .mutation(async ({ input }) => {
-        const user = await this.userService.create({ ...input, salt: '' });
-        return this.userMapper.toExternalUser(user);
+  private findByEmail() {
+    return this.trpcService.adminProcedure
+      .input(emailSchema)
+      .query(async ({ input }) => {
+        const user = await this.userService.findById(input.email);
+        return user ? this.userMapper.toExternalUser(user) : null;
       });
-
   }
 
-  remove() {
-    return this.trpcService.procedure
+  private remove() {
+    return this.trpcService.adminProcedure
       .input(idSchema)
       .mutation(async ({ input }) => {
         return await this.userService.remove(input.id);
