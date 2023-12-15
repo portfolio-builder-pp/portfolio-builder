@@ -34,7 +34,7 @@ export class UserRouter {
       .input(idSchema)
       .query(async ({ input }) => {
         const user = await this.userService.findById(input.id);
-        return user ? this.userMapper.toExternalUser(user) : null;
+        return this.userMapper.toExternalUser(user);
       });
   }
 
@@ -43,7 +43,7 @@ export class UserRouter {
       .input(emailSchema)
       .query(async ({ input }) => {
         const user = await this.userService.findById(input.email);
-        return user ? this.userMapper.toExternalUser(user) : null;
+        return this.userMapper.toExternalUser(user);
       });
   }
 
