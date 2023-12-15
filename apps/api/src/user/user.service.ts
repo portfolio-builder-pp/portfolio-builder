@@ -22,13 +22,22 @@ export class UserService {
     return this.usersRepository.findOneBy({ email });
   }
 
+  count(): Promise<number> {
+    return this.usersRepository.count();
+  }
+
   // Internal use only - user creation should only be handled by the auth service
-  async create(userDetails: RegisterDto): Promise<InternalUserDto> {
+  create(userDetails: RegisterDto): Promise<InternalUserDto> {
     return this.usersRepository.save(userDetails);
   }
 
   async remove(id: string): Promise<number | null> {
     const { affected } = await this.usersRepository.delete(id);
+    return affected ?? null;
+  }
+
+  async removeAll() {
+    const { affected } = await this.usersRepository.delete({});
     return affected ?? null;
   }
 }
