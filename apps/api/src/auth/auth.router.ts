@@ -46,7 +46,7 @@ export class AuthRouter {
       .input(registerSchema)
       .mutation(async ({ input }) => {
         const user = await this.authService.register(input);
-        return user ? this.userMapper.toExternalUser(user) : null;
+        return this.userMapper.toExternalUser(user);
       });
   }
 
@@ -54,7 +54,7 @@ export class AuthRouter {
     return this.trpcService.authProcedure
       .query(({ ctx }) => {
         const { user } = ctx;
-        return user ? this.userMapper.toExternalUser(user) : null;
+        return this.userMapper.toExternalUser(user);
       })
   }
 
