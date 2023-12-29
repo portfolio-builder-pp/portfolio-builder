@@ -2,6 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { TrpcService } from "./trpc";
 import { UserRouter } from "./user";
 import { AuthRouter } from './auth';
+import { PageRouter } from "./page";
 
 @Injectable()
 export class AppService {
@@ -9,12 +10,14 @@ export class AppService {
     private readonly trpc: TrpcService,
     private readonly userRouter: UserRouter,
     private readonly authRouter: AuthRouter,
+    private readonly pageRouter: PageRouter,
   ) {}
 
   public combineRouters() {
     return this.trpc.router({
       users: this.userRouter.getRouter(),
       auth: this.authRouter.getRouter(),
+      page: this.pageRouter.getRouter(),
     })
   }
 }
