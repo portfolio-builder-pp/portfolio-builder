@@ -54,7 +54,7 @@ async function clearDatabase(app: NestExpressApplication) {
   const userService = app.get(UserService);
 
   return {
-    users: await userService.removeAll(),
+    users: await userService.clear(),
   }
 }
 
