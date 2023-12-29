@@ -3,11 +3,12 @@ import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { createInterface } from 'readline';
 
-import { RegisterDto, UserRole } from '@portfolio-builder/shared-types';
+import { PageType, PropertyType, RegisterDto, SectionType, UserRole } from '@portfolio-builder/shared-types';
 
 import { AppModule } from './app.module';
 import { AuthService } from './auth';
 import { UserService } from './user';
+import { PageService } from './page';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -40,30 +41,88 @@ bootstrap();
 
 interface ItemCounts {
   users: number;
+  pages: number;
 }
 
 async function getItemCounts(app: NestExpressApplication): Promise<ItemCounts> {
   const userService = app.get(UserService);
+  const pageService = app.get(PageService);
 
   return {
     users: await userService.count(),
+    pages: await pageService.count(),
   }
 }
 
 async function clearDatabase(app: NestExpressApplication) {
   const userService = app.get(UserService);
+  const pageService = app.get(PageService);
 
   return {
-    users: await userService.removeAll(),
+    users: await userService.clear(),
+    pages: await pageService.clear(),
   }
 }
 
 async function populateDatabase(app: NestExpressApplication) {
   const authService = app.get(AuthService);
+  const pageService = app.get(PageService);
 
   const desiredAdminCredentials = await obtainAdminCredentials();
 
   await authService.register(desiredAdminCredentials);
+
+  await pageService.create({
+    name: 'Home',
+    slug: '',
+    order: 0,
+    enabled: true,
+    type: PageType.Home,
+    properties: [
+      {
+        name: 'font-color',
+        value: '#333',
+        type: PropertyType.ColorHEX,
+      }
+    ],
+    sections: [
+      {
+        title: 'Welcome',
+        content: '',
+        type: SectionType.Hero,
+      }
+    ],
+  });
+
+  await pageService.create({
+    name: 'Blog',
+    slug: 'blog',
+    order: 1,
+    enabled: true,
+    type: PageType.Blog,
+    properties: [],
+    sections: [],
+  });
+
+  await pageService.create({
+    name: 'Portfolio',
+    slug: 'portfolio',
+    order: 2,
+    enabled: true,
+    type: PageType.Portfolio,
+    properties: [],
+    sections: [],
+  });
+
+  await pageService.create({
+    name: 'Contact',
+    slug: 'contact',
+    order: 3,
+    enabled: true,
+    type: PageType.Contact,
+    properties: [],
+    sections: [],
+  });
 }
 
 function getNonEmptyCollections(counts: ItemCounts): string[] {

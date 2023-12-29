@@ -3,7 +3,8 @@ import { ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Environments } from '@portfolio-builder/shared-types';
 import { AppConfigService, ConfigModule } from '../config';
-import { User } from '../user/user.entity';
+import { User } from '../user';
+import { Page } from '../page';
 
 @Module({
   imports: [
@@ -17,7 +18,7 @@ import { User } from '../user/user.entity';
         password: configService.get('database.password', { infer: true }),
         database: configService.get('database.name', { infer: true }),
         synchronize: configService.get('general.environment', { infer: true }) === Environments.Development,
-        entities: [User],
+        entities: [User, Page],
       }),
       inject: [ConfigService],
     })

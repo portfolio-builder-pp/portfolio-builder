@@ -36,8 +36,7 @@ export class UserService {
     return affected ?? null;
   }
 
-  async removeAll() {
-    const { affected } = await this.usersRepository.delete({});
-    return affected ?? null;
+  async clear(): Promise<void> {
+    return await this.usersRepository.clear();
   }
 }

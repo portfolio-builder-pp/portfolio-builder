@@ -10,3 +10,11 @@ export interface UserDto {
   email: string;
   role: UserRole;
 }
+
+export interface InternalUserDto extends UserDto {
+  password: string;
+}
+
+export type LoginDto = Pick<InternalUserDto, 'email' | 'password'>
+
+export type RegisterDto = Omit<InternalUserDto, 'id'>;
