@@ -57,6 +57,39 @@
           "codeCoverage": true
         }
       }
+    },
+    "initialize-template-build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/initialize-template",
+        "main": "apps/api/src/initialize.ts",
+        "tsConfig": "apps/api/tsconfig.app.json",
+        "isolatedConfig": true,
+        "webpackConfig": "apps/api/webpack.config.js"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "initialize-template-run": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "api:initialize-template-build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "api:initialize-template-build:development"
+        },
+        "production": {
+          "buildTarget": "api:initialize-template-build:production"
+        }
+      }
     }
   },
   "tags": []

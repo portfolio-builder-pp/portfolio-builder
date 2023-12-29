@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { TRPCError } from '@trpc/server';
 import { registerSchema, loginSchema } from '@portfolio-builder/shared-validation';
+import { AuthErrors } from '@portfolio-builder/shared-types';
 import { UserMapper } from '../user';
 import { TrpcService } from '../trpc';
 import { AuthService } from './auth.service';
@@ -26,18 +27,28 @@ export class AuthRouter {
     return this.trpcService.procedure
       .input(loginSchema)
       .mutation(async ({ input, ctx }) => {
-        const user = await this.authService.login(input);
+        try {
+          const user = await this.authService.login(input);
 
-        if (!user) {
-          throw new TRPCError({
-            code: 'UNAUTHORIZED',
-            message: 'Invalid username or password',
-          });
+          ctx.session.user = user;
+
+          return this.userMapper.toExternalUser(user);
+        } catch (error: AuthErrors | unknown) {
+          switch (error) {
+            case AuthErrors.InvalidEmailOrPassword: {
+              throw new TRPCError({
+                code: 'UNAUTHORIZED',
+                message: 'Invalid username or password',
+              });
+            }
+            default: {
+              throw new TRPCError({
+                code: 'BAD_REQUEST',
+                message: 'Something went wrong',
+              })
+            }
+          }
         }
-
-        ctx.session.user = user;
-
-        return this.userMapper.toExternalUser(user);
       });
   }
 
@@ -45,8 +56,25 @@ export class AuthRouter {
     return this.trpcService.adminProcedure
       .input(registerSchema)
       .mutation(async ({ input }) => {
-        const user = await this.authService.register(input);
-        return user ? this.userMapper.toExternalUser(user) : null;
+        try {
+          const user = await this.authService.register(input);
+          return this.userMapper.toExternalUser(user);
+        } catch (error: AuthErrors | unknown) {
+          switch (error) {
+            case AuthErrors.EmailAlreadyInUse: {
+              throw new TRPCError({
+                code: 'BAD_REQUEST',
+                message: 'Email already in use',
+              })
+            }
+            default: {
+              throw new TRPCError({
+                code: 'BAD_REQUEST',
+                message: 'Something went wrong',
+              })
+            }
+          }
+        }
       });
   }
 
@@ -54,7 +82,7 @@ export class AuthRouter {
     return this.trpcService.authProcedure
       .query(({ ctx }) => {
         const { user } = ctx;
-        return user ? this.userMapper.toExternalUser(user) : null;
+        return this.userMapper.toExternalUser(user);
       })
   }
 

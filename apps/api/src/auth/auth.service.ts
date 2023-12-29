@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { compare, hash } from 'bcrypt';
-import { InternalUserDto, LoginDto, RegisterDto } from '@portfolio-builder/shared-types';
+import { AuthErrors, InternalUserDto, LoginDto, RegisterDto } from '@portfolio-builder/shared-types';
 import { UserService } from '../user';
 
 @Injectable()
@@ -12,17 +12,21 @@ export class AuthService {
   async login(userDetails: LoginDto): Promise<InternalUserDto | null> {
     const user = await this.userService.findByEmail(userDetails.email);
 
-    if (!user) return null;
+    if (!user) throw AuthErrors.InvalidEmailOrPassword;
 
     const validPassword = await this.comparePassword(userDetails.password, user.password);
 
-    if (!validPassword) return null;
+    if (!validPassword) throw AuthErrors.InvalidEmailOrPassword;
 
     return user;
   }
 
   async register(userDetails: RegisterDto): Promise<InternalUserDto> {
     const hashedPassword = await this.hashPassword(userDetails.password);
+
+    const user = await this.userService.findByEmail(userDetails.email);
+
+    if (user) throw AuthErrors.EmailAlreadyInUse;
 
     return this.userService.create({
       ...userDetails,

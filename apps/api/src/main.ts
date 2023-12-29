@@ -1,30 +1,39 @@
-import { INestApplication, Logger } from '@nestjs/common';
+import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import { NestExpressApplication } from '@nestjs/platform-express';
 import session from 'express-session';
 
 import { createExpressMiddleware } from '@trpc/server/adapters/express';
+import { ConfigService } from '@nestjs/config';
+
+import { Environments } from '@portfolio-builder/shared-types';
 
 import { AppModule } from './app.module';
 import { AppService } from './app.service';
 import { renderTrpcPanel } from 'trpc-panel';
 import { createContext } from './trpc/trpc.context';
+import { AppConfigService } from './config';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  const port = Number(process.env.API_DOCKER_PORT || 3000);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  const configService = app.get<AppConfigService>(ConfigService);
 
-  configureSession(app);
-  configureRoutes(app, port);
+  const port = configService.get('general.port', { infer: true });
+  const sessionSecret = configService.get('session.secret', { infer: true });
+  const environment = configService.get('general.environment', { infer: true });
+
+  configureSession(app, sessionSecret);
+  configureRoutes(app, port, environment);
 
   await app.listen(port);
 
   Logger.log(`🚀 Application is running on: http://localhost:${port}`);
 }
 
-function configureSession(app: INestApplication) {
+function configureSession(app: NestExpressApplication, secret: string) {
   app.use(
     session({
-      secret: process.env.SESSION_SECRET ?? '',
+      secret,
       resave: false,
       saveUninitialized: false,
       cookie: {
@@ -37,7 +46,7 @@ function configureSession(app: INestApplication) {
   Logger.log('⚙️ Session configured!');
 }
 
-function configureRoutes(app: INestApplication, port: number) {
+function configureRoutes(app: NestExpressApplication, port: number, environment: Environments) {
   const appService = app.get(AppService);
   const router = appService.combineRouters();
 
@@ -46,7 +55,7 @@ function configureRoutes(app: INestApplication, port: number) {
 
   app.use(`/${trpcEndpoint}`, createExpressMiddleware({ router, createContext }));
 
-  if (process.env.NODE_ENV === 'development') {
+  if (environment === Environments.Development) {
     app.use(`/${debugPanelEndpoint}`, (_, res) => res.send(renderTrpcPanel(router, { url: `http://localhost:${port}/${trpcEndpoint}` })));
   }
 

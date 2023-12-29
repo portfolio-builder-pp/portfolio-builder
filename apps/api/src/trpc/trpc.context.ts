@@ -13,7 +13,7 @@ export const createContext = ({ req }: CreateExpressContextOptions) => {
 
   return {
     session,
-    user,
+    user: user ?? null,
     isAuthenticated: !!user,
     isAdmin: user?.role === UserRole.Admin,
   }
