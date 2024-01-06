@@ -6,3 +6,7 @@ export enum AuthErrors {
 export enum PageErrors {
   PageDoesNotExist = 'page-does-not-exist',
 }
+
+export enum BlogPostErrors {
+  BlogPostDoesNotExist = 'blog-post-does-not-exist',
+}

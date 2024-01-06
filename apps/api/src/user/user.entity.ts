@@ -1,5 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { InternalUserDto, UserRole } from '@portfolio-builder/shared-types';
+import { BlogPost } from '../blog-post';
 
 @Entity()
 export class User implements InternalUserDto {
@@ -21,7 +22,12 @@ export class User implements InternalUserDto {
   @Column({
     type: 'enum',
     enum: UserRole,
-    default: UserRole.Moderator
+    default: UserRole.Moderator,
   })
   role: UserRole;
+
+  @OneToMany(() => BlogPost, (blogPost) => blogPost.author, {
+    onDelete: 'SET NULL',
+  })
+  blogPosts: BlogPost[];
 }

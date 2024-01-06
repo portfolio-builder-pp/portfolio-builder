@@ -1,6 +1,7 @@
 import { ZodType, z } from 'zod';
 import { InternalUserDto, LoginDto, RegisterDto, UserDto, UserRole } from '@portfolio-builder/shared-types';
 import { idSchema } from './utils';
+import { blogPostSchema } from './blog-post';
 
 export const emailSchema = z
   .object({ email: z.string().trim().email() })
@@ -19,6 +20,9 @@ export const userSchema = z
 export const internalUserSchema = z
   .object({
     password: z.string().trim().min(6),
+  })
+  .extend({
+    blogPosts: z.lazy(() => blogPostSchema.array()),
   })
   .merge(userSchema)
   .strip() satisfies ZodType<InternalUserDto>;

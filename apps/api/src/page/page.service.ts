@@ -43,6 +43,6 @@ export class PageService {
   }
 
   async clear(): Promise<void> {
-    return this.pagesRepository.clear();
+    this.pagesRepository.delete({});
   }
 }

@@ -3,12 +3,20 @@ import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { createInterface } from 'readline';
 
-import { PageType, PropertyType, RegisterDto, SectionType, UserRole } from '@portfolio-builder/shared-types';
+import {
+  BlogPostStatus,
+  PageType,
+  PropertyType,
+  RegisterDto,
+  SectionType,
+  UserRole,
+} from '@portfolio-builder/shared-types';
 
 import { AppModule } from './app.module';
 import { AuthService } from './auth';
 import { UserService } from './user';
 import { PageService } from './page';
+import { BlogPostService } from './blog-post';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -32,7 +40,7 @@ async function bootstrap() {
   }
 
   // Initialize app
-  Logger.log('Initializing template')
+  Logger.log('Initializing template');
   await populateDatabase(app);
   Logger.log(`Template initialized`);
 }
@@ -42,35 +50,41 @@ bootstrap();
 interface ItemCounts {
   users: number;
   pages: number;
+  blogPosts: number;
 }
 
 async function getItemCounts(app: NestExpressApplication): Promise<ItemCounts> {
+  const blogPostService = app.get(BlogPostService);
   const userService = app.get(UserService);
   const pageService = app.get(PageService);
 
   return {
+    blogPosts: await blogPostService.count(),
     users: await userService.count(),
     pages: await pageService.count(),
-  }
+  };
 }
 
 async function clearDatabase(app: NestExpressApplication) {
+  const blogPostService = app.get(BlogPostService);
   const userService = app.get(UserService);
   const pageService = app.get(PageService);
 
   return {
+    blogPosts: await blogPostService.clear(),
     users: await userService.clear(),
     pages: await pageService.clear(),
-  }
+  };
 }
 
 async function populateDatabase(app: NestExpressApplication) {
   const authService = app.get(AuthService);
   const pageService = app.get(PageService);
+  const blogPostService = app.get(BlogPostService);
 
   const desiredAdminCredentials = await obtainAdminCredentials();
 
-  await authService.register(desiredAdminCredentials);
+  const admin = await authService.register(desiredAdminCredentials);
 
   await pageService.create({
     name: 'Home',
@@ -83,14 +97,14 @@ async function populateDatabase(app: NestExpressApplication) {
         name: 'font-color',
         value: '#333',
         type: PropertyType.ColorHEX,
-      }
+      },
     ],
     sections: [
       {
         title: 'Welcome',
         content: '',
         type: SectionType.Hero,
-      }
+      },
     ],
   });
 
@@ -123,6 +137,26 @@ async function populateDatabase(app: NestExpressApplication) {
     properties: [],
     sections: [],
   });
+
+  await blogPostService.create(
+    {
+      title: "AI's Future Impact: Transforming Lives",
+      content: '',
+      order: 0,
+      status: BlogPostStatus.Draft,
+    },
+    admin
+  );
+
+  await blogPostService.create(
+    {
+      title: 'Cooking Made Simple - Kitchen Tips & Recipes',
+      content: '',
+      order: 0,
+      status: BlogPostStatus.Draft,
+    },
+    admin
+  );
 }
 
 function getNonEmptyCollections(counts: ItemCounts): string[] {
