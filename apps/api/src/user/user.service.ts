@@ -37,6 +37,6 @@ export class UserService {
   }
 
   async clear(): Promise<void> {
-    return await this.usersRepository.clear();
+    await this.usersRepository.delete({});
   }
 }
