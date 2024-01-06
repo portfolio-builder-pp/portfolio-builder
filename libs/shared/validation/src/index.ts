@@ -1,3 +1,4 @@
+export * from './blog-post';
 export * from './config';
 export * from './page';
 export * from './property';
