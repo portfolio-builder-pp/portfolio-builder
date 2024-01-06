@@ -14,9 +14,9 @@ export interface BlogPostDto {
   content: string;
   order: number;
   status: BlogPostStatus;
-  createdAt: Date;
-  updatedAt: Date;
-  publishedAt: Date;
+  createdAt: Date | string;
+  updatedAt: Date | string;
+  publishedAt?: Date | string;
   author: UserDto;
 }
 
