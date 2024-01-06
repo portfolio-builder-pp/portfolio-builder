@@ -5,6 +5,7 @@ import { Environments } from '@portfolio-builder/shared-types';
 import { AppConfigService, ConfigModule } from '../config';
 import { User } from '../user';
 import { Page } from '../page';
+import { BlogPost } from '../blog-post';
 
 @Module({
   imports: [
@@ -17,11 +18,13 @@ import { Page } from '../page';
         username: configService.get('database.username', { infer: true }),
         password: configService.get('database.password', { infer: true }),
         database: configService.get('database.name', { infer: true }),
-        synchronize: configService.get('general.environment', { infer: true }) === Environments.Development,
-        entities: [User, Page],
+        synchronize:
+          configService.get('general.environment', { infer: true }) ===
+          Environments.Development,
+        entities: [User, Page, BlogPost],
       }),
       inject: [ConfigService],
-    })
-  ]
+    }),
+  ],
 })
 export class DatabaseModule {}
