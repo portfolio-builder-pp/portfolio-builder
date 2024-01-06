@@ -1,3 +1,5 @@
+import { BlogPostDto } from './blog-post';
+
 export enum UserRole {
   Moderator = 'Moderator',
   Admin = 'Admin',
@@ -13,8 +15,9 @@ export interface UserDto {
 
 export interface InternalUserDto extends UserDto {
   password: string;
+  blogPosts: BlogPostDto[];
 }
 
-export type LoginDto = Pick<InternalUserDto, 'email' | 'password'>
+export type LoginDto = Pick<InternalUserDto, 'email' | 'password'>;
 
-export type RegisterDto = Omit<InternalUserDto, 'id'>;
+export type RegisterDto = Omit<InternalUserDto, 'id' | 'blogPosts'>;
