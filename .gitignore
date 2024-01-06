@@ -42,3 +42,4 @@ Thumbs.db
 
 # Environmental variables
 .env
+.astro

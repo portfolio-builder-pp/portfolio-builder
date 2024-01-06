@@ -1,23 +1,15 @@
 {
   "name": "public-e2e",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "projectType": "application",
   "sourceRoot": "apps/public-e2e/src",
+  "projectType": "application",
   "targets": {
     "e2e": {
       "executor": "@nx/cypress:cypress",
       "options": {
         "cypressConfig": "apps/public-e2e/cypress.config.ts",
-        "testingType": "e2e",
-        "devServerTarget": "public:serve"
-      },
-      "configurations": {
-        "production": {
-          "devServerTarget": "public:serve:production"
-        },
-        "ci": {
-          "devServerTarget": "public:serve-static"
-        }
+        "devServerTarget": "public:dev",
+        "testingType": "e2e"
       }
     },
     "lint": {
@@ -28,6 +20,6 @@
       }
     }
   },
-  "implicitDependencies": ["public"],
-  "tags": []
+  "tags": [],
+  "implicitDependencies": ["public"]
 }
