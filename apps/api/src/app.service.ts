@@ -3,6 +3,7 @@ import { TrpcService } from "./trpc";
 import { UserRouter } from "./user";
 import { AuthRouter } from './auth';
 import { PageRouter } from "./page";
+import { BlogPostRouter } from './blog-post/';
 
 @Injectable()
 export class AppService {
@@ -11,6 +12,7 @@ export class AppService {
     private readonly userRouter: UserRouter,
     private readonly authRouter: AuthRouter,
     private readonly pageRouter: PageRouter,
+    private readonly blogPostRouter: BlogPostRouter
   ) {}
 
   public combineRouters() {
@@ -18,6 +20,7 @@ export class AppService {
       users: this.userRouter.getRouter(),
       auth: this.authRouter.getRouter(),
       page: this.pageRouter.getRouter(),
-    })
+      blogPost: this.blogPostRouter.getRouter(),
+    });
   }
 }
