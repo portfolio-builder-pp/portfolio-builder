@@ -10,12 +10,13 @@ export enum BlogPostStatus {
 export interface BlogPostDto {
   id: string;
   title: string;
+  description: string;
   content: string;
   order: number;
   status: BlogPostStatus;
-  createdAt: Date;
-  updatedAt: Date;
-  publishedAt: Date;
+  createdAt: Date | string;
+  updatedAt: Date | string;
+  publishedAt?: Date | string;
   author: UserDto;
 }
 

@@ -11,6 +11,7 @@ import { userSchema } from './user';
 export const blogPostSchema = z
   .object({
     title: z.string().trim().min(1),
+    description: z.string().trim().min(1),
     content: z.string().trim(),
     order: z.number(),
     status: z.nativeEnum(BlogPostStatus),

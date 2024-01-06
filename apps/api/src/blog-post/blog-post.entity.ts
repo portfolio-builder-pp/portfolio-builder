@@ -18,6 +18,9 @@ export class BlogPost implements BlogPostDto {
   title: string;
 
   @Column()
+  description: string;
+
+  @Column()
   content: string;
 
   @Column()
