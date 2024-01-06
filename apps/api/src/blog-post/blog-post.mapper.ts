@@ -25,6 +25,7 @@ export class BlogPostMapper {
     return {
       id: internalUser.id,
       title: internalUser.title,
+      description: internalUser.description,
       content: internalUser.content,
       order: internalUser.order,
       status: internalUser.status,

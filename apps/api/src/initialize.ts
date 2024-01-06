@@ -141,6 +141,8 @@ async function populateDatabase(app: NestExpressApplication) {
   await blogPostService.create(
     {
       title: "AI's Future Impact: Transforming Lives",
+      description:
+        'Explore the profound influence of artificial intelligence on our daily existence. From healthcare to education, "AI\'s Future Impact: Transforming Lives" delves into the innovations reshaping our world and enhancing the human experience.',
       content: '',
       order: 0,
       status: BlogPostStatus.Draft,
@@ -151,6 +153,8 @@ async function populateDatabase(app: NestExpressApplication) {
   await blogPostService.create(
     {
       title: 'Cooking Made Simple - Kitchen Tips & Recipes',
+      description:
+        'Embark on a culinary journey with "Cooking Made Simple - Kitchen Tips & Recipes." Discover practical kitchen hacks and delectable recipes that simplify your cooking experience, turning every meal into a delightful adventure.',
       content: '',
       order: 0,
       status: BlogPostStatus.Draft,

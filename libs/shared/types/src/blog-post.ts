@@ -10,6 +10,7 @@ export enum BlogPostStatus {
 export interface BlogPostDto {
   id: string;
   title: string;
+  description: string;
   content: string;
   order: number;
   status: BlogPostStatus;
