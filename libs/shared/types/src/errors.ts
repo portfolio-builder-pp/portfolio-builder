@@ -10,3 +10,7 @@ export enum PageErrors {
 export enum BlogPostErrors {
   BlogPostDoesNotExist = 'blog-post-does-not-exist',
 }
+
+export enum ContactDetailsErrors {
+  ContactDetailsDoesNotExist = 'contact-details-do-not-exist',
+}
