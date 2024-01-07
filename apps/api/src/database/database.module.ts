@@ -6,6 +6,7 @@ import { AppConfigService, ConfigModule } from '../config';
 import { User } from '../user';
 import { Page } from '../page';
 import { BlogPost } from '../blog-post';
+import { ContactDetails } from '../contact-details';
 
 @Module({
   imports: [
@@ -21,7 +22,7 @@ import { BlogPost } from '../blog-post';
         synchronize:
           configService.get('general.environment', { infer: true }) ===
           Environments.Development,
-        entities: [User, Page, BlogPost],
+        entities: [User, Page, BlogPost, ContactDetails],
       }),
       inject: [ConfigService],
     }),
