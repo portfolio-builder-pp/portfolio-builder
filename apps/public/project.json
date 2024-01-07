@@ -1,78 +1,30 @@
 {
   "name": "public",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/public/src",
   "projectType": "application",
-  "implicitDependencies": ["api", "shared-ui"],
+  "sourceRoot": "apps/public/src",
   "targets": {
     "build": {
-      "executor": "@nx/vite:build",
-      "outputs": ["{options.outputPath}"],
-      "defaultConfiguration": "production",
-      "options": {
-        "outputPath": "dist/apps/public"
-      },
-      "configurations": {
-        "development": {
-          "mode": "development"
-        },
-        "production": {
-          "mode": "production"
-        }
-      }
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "executor": "@nxtensions/astro:build",
+      "options": {}
     },
-    "serve": {
-      "executor": "@nx/vite:dev-server",
-      "defaultConfiguration": "development",
-      "options": {
-        "buildTarget": "public:build"
-      },
-      "configurations": {
-        "development": {
-          "buildTarget": "public:build:development",
-          "hmr": true
-        },
-        "production": {
-          "buildTarget": "public:build:production",
-          "hmr": false
-        }
-      }
+    "dev": {
+      "executor": "@nxtensions/astro:dev",
+      "options": {}
     },
     "preview": {
-      "executor": "@nx/vite:preview-server",
-      "defaultConfiguration": "development",
-      "options": {
-        "buildTarget": "public:build"
-      },
-      "configurations": {
-        "development": {
-          "buildTarget": "public:build:development"
-        },
-        "production": {
-          "buildTarget": "public:build:production"
+      "dependsOn": [
+        {
+          "target": "build",
+          "projects": "self"
         }
-      }
+      ],
+      "executor": "@nxtensions/astro:preview",
+      "options": {}
     },
-    "test": {
-      "executor": "@nx/vite:test",
-      "outputs": ["{options.reportsDirectory}"],
-      "options": {
-        "passWithNoTests": true,
-        "reportsDirectory": "../../coverage/apps/public"
-      }
-    },
-    "lint": {
-      "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["apps/public/**/*.{ts,tsx,js,jsx}"]
-      }
-    },
-    "serve-static": {
-      "executor": "@nx/web:file-server",
-      "options": {
-        "buildTarget": "public:build"
-      }
+    "check": {
+      "executor": "@nxtensions/astro:check"
     }
   },
   "tags": []

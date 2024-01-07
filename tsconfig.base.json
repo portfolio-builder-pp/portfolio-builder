@@ -17,12 +17,12 @@
     "baseUrl": ".",
     "paths": {
       "@portfolio-builder/api": ["apps/api/src/index.ts"],
-      "@portfolio-builder/shared-ui": ["libs/shared/ui/src/index.ts"],
       "@portfolio-builder/shared-types": ["libs/shared/types/src/index.ts"],
+      "@portfolio-builder/shared-ui": ["libs/shared/ui/src/index.ts"],
       "@portfolio-builder/shared-validation": [
         "libs/shared/validation/src/index.ts"
       ]
     }
   },
-  "exclude": ["node_modules", "tmp"],
+  "exclude": ["node_modules", "tmp"]
 }
