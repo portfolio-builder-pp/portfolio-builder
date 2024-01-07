@@ -6,6 +6,7 @@ import { UserModule } from './user';
 import { AuthModule } from './auth';
 import { PageModule } from './page';
 import { BlogPostModule } from './blog-post';
+import { ContactDetailsModule } from './contact-details';
 import { AppService } from './app.service';
 
 @Module({
@@ -16,6 +17,7 @@ import { AppService } from './app.service';
     AuthModule,
     PageModule,
     BlogPostModule,
+    ContactDetailsModule,
   ],
   providers: [AppService],
   exports: [AppService],

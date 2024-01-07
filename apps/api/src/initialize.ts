@@ -17,6 +17,7 @@ import { AuthService } from './auth';
 import { UserService } from './user';
 import { PageService } from './page';
 import { BlogPostService } from './blog-post';
+import { ContactDetailsService } from './contact-details';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -51,17 +52,20 @@ interface ItemCounts {
   users: number;
   pages: number;
   blogPosts: number;
+  contactDetails: number;
 }
 
 async function getItemCounts(app: NestExpressApplication): Promise<ItemCounts> {
   const blogPostService = app.get(BlogPostService);
   const userService = app.get(UserService);
   const pageService = app.get(PageService);
+  const contactDetailsService = app.get(ContactDetailsService);
 
   return {
     blogPosts: await blogPostService.count(),
     users: await userService.count(),
     pages: await pageService.count(),
+    contactDetails: await contactDetailsService.count(),
   };
 }
 
@@ -69,11 +73,13 @@ async function clearDatabase(app: NestExpressApplication) {
   const blogPostService = app.get(BlogPostService);
   const userService = app.get(UserService);
   const pageService = app.get(PageService);
+  const contactDetailsService = app.get(ContactDetailsService);
 
   return {
     blogPosts: await blogPostService.clear(),
     users: await userService.clear(),
     pages: await pageService.clear(),
+    contactDetails: await contactDetailsService.clear(),
   };
 }
 
@@ -81,6 +87,7 @@ async function populateDatabase(app: NestExpressApplication) {
   const authService = app.get(AuthService);
   const pageService = app.get(PageService);
   const blogPostService = app.get(BlogPostService);
+  const contactDetailsService = app.get(ContactDetailsService);
 
   const desiredAdminCredentials = await obtainAdminCredentials();
 
@@ -161,6 +168,34 @@ async function populateDatabase(app: NestExpressApplication) {
     },
     admin
   );
+
+  await contactDetailsService.create({
+    title: 'John Doe',
+    order: 0,
+    phoneNumber: '123 456 789',
+    socialMediaLinks: {
+      instagram: 'https://www.instagram.com/politechnika.poznanska/',
+      twitter: 'https://twitter.com/PUT_Poznan',
+      facebook: 'https://www.facebook.com/Politechnika.Poznanska',
+      youtube: 'https://www.youtube.com/channel/UC9jAyy-X65QOVZpyGu9AKHw',
+      tiktok: '',
+      onlyfans: '',
+    },
+  });
+
+  await contactDetailsService.create({
+    title: 'Jane Doe',
+    order: 1,
+    contactEmail: 'some-kind-of@email.com',
+    address: {
+      country: 'Polska',
+      state: 'Wielkopolska',
+      city: 'Poznań',
+      streetName: 'plac Marii Skłodowskiej-Curie 5',
+      streetNumber: '5',
+      postCode: '60-965',
+    },
+  });
 }
 
 function getNonEmptyCollections(counts: ItemCounts): string[] {
