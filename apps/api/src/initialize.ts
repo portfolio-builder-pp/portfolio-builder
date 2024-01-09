@@ -6,6 +6,7 @@ import { createInterface } from 'readline';
 import {
   BlogPostStatus,
   PageType,
+  PropertyName,
   PropertyType,
   RegisterDto,
   SectionType,
@@ -18,6 +19,7 @@ import { UserService } from './user';
 import { PageService } from './page';
 import { BlogPostService } from './blog-post';
 import { ContactDetailsService } from './contact-details';
+import { GlobalPropertyService } from './global-properties';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -53,6 +55,7 @@ interface ItemCounts {
   pages: number;
   blogPosts: number;
   contactDetails: number;
+  globalProperties: number;
 }
 
 async function getItemCounts(app: NestExpressApplication): Promise<ItemCounts> {
@@ -60,12 +63,14 @@ async function getItemCounts(app: NestExpressApplication): Promise<ItemCounts> {
   const userService = app.get(UserService);
   const pageService = app.get(PageService);
   const contactDetailsService = app.get(ContactDetailsService);
+  const globalPropertyService = app.get(GlobalPropertyService);
 
   return {
     blogPosts: await blogPostService.count(),
     users: await userService.count(),
     pages: await pageService.count(),
     contactDetails: await contactDetailsService.count(),
+    globalProperties: await globalPropertyService.count(),
   };
 }
 
@@ -74,12 +79,14 @@ async function clearDatabase(app: NestExpressApplication) {
   const userService = app.get(UserService);
   const pageService = app.get(PageService);
   const contactDetailsService = app.get(ContactDetailsService);
+  const globalPropertyService = app.get(GlobalPropertyService);
 
   return {
     blogPosts: await blogPostService.clear(),
     users: await userService.clear(),
     pages: await pageService.clear(),
     contactDetails: await contactDetailsService.clear(),
+    globalProperties: await globalPropertyService.clear(),
   };
 }
 
@@ -88,6 +95,7 @@ async function populateDatabase(app: NestExpressApplication) {
   const pageService = app.get(PageService);
   const blogPostService = app.get(BlogPostService);
   const contactDetailsService = app.get(ContactDetailsService);
+  const globalPropertyService = app.get(GlobalPropertyService);
 
   const desiredAdminCredentials = await obtainAdminCredentials();
 
@@ -101,7 +109,7 @@ async function populateDatabase(app: NestExpressApplication) {
     type: PageType.Home,
     properties: [
       {
-        name: 'font-color',
+        name: PropertyName.FontColor,
         value: '#333',
         type: PropertyType.ColorHEX,
       },
@@ -203,6 +211,19 @@ async function populateDatabase(app: NestExpressApplication) {
       streetNumber: '5',
       postCode: '60-965',
     },
+  });
+
+  await globalPropertyService.save({
+    name: PropertyName.AppName,
+    value: 'AI Cooking',
+    type: PropertyType.Text,
+  });
+
+  await globalPropertyService.save({
+    name: PropertyName.AppDescription,
+    value:
+      'Transform your culinary journey with the AI cooking. Tailored recipes meet real-time guidance, adapting to your tastes and dietary requirements. Experience a seamless kitchen adventure, where innovation meets flavor, making every meal a delightful and stress-free masterpiece, personalized just for you.',
+    type: PropertyType.Text,
   });
 }
 

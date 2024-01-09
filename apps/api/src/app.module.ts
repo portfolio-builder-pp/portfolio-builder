@@ -7,6 +7,7 @@ import { AuthModule } from './auth';
 import { PageModule } from './page';
 import { BlogPostModule } from './blog-post';
 import { ContactDetailsModule } from './contact-details';
+import { GlobalPropertyModule } from './global-properties';
 import { AppService } from './app.service';
 
 @Module({
@@ -18,6 +19,7 @@ import { AppService } from './app.service';
     PageModule,
     BlogPostModule,
     ContactDetailsModule,
+    GlobalPropertyModule,
   ],
   providers: [AppService],
   exports: [AppService],
