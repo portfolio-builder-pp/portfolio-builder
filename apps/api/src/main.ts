@@ -1,6 +1,7 @@
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
+import helmet from 'helmet';
 import session from 'express-session';
 
 import { createExpressMiddleware } from '@trpc/server/adapters/express';
@@ -22,6 +23,7 @@ async function bootstrap() {
   const sessionSecret = configService.get('session.secret', { infer: true });
   const environment = configService.get('general.environment', { infer: true });
 
+  configureHelmet(app);
   configureSession(app, sessionSecret);
   configureRoutes(app, port, environment);
 
@@ -42,8 +44,14 @@ function configureSession(app: NestExpressApplication, secret: string) {
       name: 'PORTFOLIO_BUILDER_SESSION',
     })
   );
-  
+
   Logger.log('⚙️ Session configured!');
+}
+
+function configureHelmet(app: NestExpressApplication) {
+  app.use(helmet());
+
+  Logger.log('⚙️ Helmet configured!');
 }
 
 function configureRoutes(app: NestExpressApplication, port: number, environment: Environments) {
