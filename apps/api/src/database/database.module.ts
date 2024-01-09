@@ -7,6 +7,7 @@ import { User } from '../user';
 import { Page } from '../page';
 import { BlogPost } from '../blog-post';
 import { ContactDetails } from '../contact-details';
+import { GlobalProperty } from '../global-properties';
 
 @Module({
   imports: [
@@ -22,7 +23,7 @@ import { ContactDetails } from '../contact-details';
         synchronize:
           configService.get('general.environment', { infer: true }) ===
           Environments.Development,
-        entities: [User, Page, BlogPost, ContactDetails],
+        entities: [User, Page, BlogPost, ContactDetails, GlobalProperty],
       }),
       inject: [ConfigService],
     }),
