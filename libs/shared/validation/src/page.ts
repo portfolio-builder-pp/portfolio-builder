@@ -13,6 +13,8 @@ export const pageSchema = z
     type: z.nativeEnum(PageType),
     properties: propertySchema.array(),
     sections: sectionSchema.array(),
+    seoTitle: z.string().trim(),
+    seoDescription: z.string().trim(),
   })
   .merge(idSchema)
   .strip() satisfies ZodType<PageDto>;

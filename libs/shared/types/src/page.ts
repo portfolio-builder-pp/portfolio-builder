@@ -11,14 +11,16 @@ export enum PageType {
 }
 
 export interface PageDto {
-  id: string,
-  name: string,
-  slug: string,
-  order: number,
-  enabled: boolean,
-  type: PageType,
-  properties: PropertyDto[],
-  sections: SectionDto[],
+  id: string;
+  name: string;
+  slug: string;
+  order: number;
+  enabled: boolean;
+  type: PageType;
+  properties: PropertyDto[];
+  sections: SectionDto[];
+  seoTitle: string;
+  seoDescription: string;
 }
 
 export type CreatePageDto = WithDefaultValues<Omit<PageDto, 'id'>, 'enabled' | 'type'>;

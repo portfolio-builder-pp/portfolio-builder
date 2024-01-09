@@ -106,6 +106,8 @@ async function populateDatabase(app: NestExpressApplication) {
         type: SectionType.Hero,
       },
     ],
+    seoTitle: 'Home',
+    seoDescription: '',
   });
 
   await pageService.create({
@@ -116,6 +118,8 @@ async function populateDatabase(app: NestExpressApplication) {
     type: PageType.Blog,
     properties: [],
     sections: [],
+    seoTitle: 'Blog',
+    seoDescription: 'Welcome to the blog',
   });
 
   await pageService.create({
@@ -126,6 +130,8 @@ async function populateDatabase(app: NestExpressApplication) {
     type: PageType.Portfolio,
     properties: [],
     sections: [],
+    seoTitle: 'Portfolio',
+    seoDescription: '',
   });
 
   await pageService.create({
@@ -136,6 +142,8 @@ async function populateDatabase(app: NestExpressApplication) {
     type: PageType.Contact,
     properties: [],
     sections: [],
+    seoTitle: 'Contact',
+    seoDescription: 'Get in touch with us',
   });
 
   await blogPostService.create(

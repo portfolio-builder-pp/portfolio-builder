@@ -21,7 +21,7 @@ export class Page implements PageDto {
   @Column({
     type: 'enum',
     enum: PageType,
-    default: PageType.Custom
+    default: PageType.Custom,
   })
   type: PageType;
 
@@ -30,4 +30,10 @@ export class Page implements PageDto {
 
   @Column({ type: 'simple-json' })
   properties: PropertyDto[];
+
+  @Column()
+  seoTitle: string;
+
+  @Column()
+  seoDescription: string;
 }
