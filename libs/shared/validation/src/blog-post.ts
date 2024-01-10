@@ -8,6 +8,10 @@ import {
 import { dateSchema, idSchema } from './utils';
 import { userSchema } from './user';
 
+export const blogStatusSchema = z.object({
+  status: z.nativeEnum(BlogPostStatus).optional(),
+});
+
 export const blogPostSchema = z
   .object({
     title: z.string().trim().min(1),

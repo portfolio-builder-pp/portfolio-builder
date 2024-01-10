@@ -9,3 +9,14 @@ export function slugify(str: string) {
     .replace(/-+/g, '-') // remove consecutive hyphens
     .slice(0, 50);
 }
+
+export function formatDate(str: string | Date) {
+  const date = new Date(str);
+
+  return date.toLocaleDateString(undefined, {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+}

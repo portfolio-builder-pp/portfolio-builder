@@ -18,8 +18,11 @@ export class BlogPostService {
     private readonly blogPostsRepository: Repository<BlogPost>
   ) {}
 
-  findAll(): Promise<InternalBlogPostDto[]> {
-    return this.blogPostsRepository.find({ relations: ['author'] });
+  findAll(status?: BlogPostStatus): Promise<InternalBlogPostDto[]> {
+    return this.blogPostsRepository.find({
+      where: { status },
+      relations: ['author'],
+    });
   }
 
   findById(id: string): Promise<InternalBlogPostDto | null> {
