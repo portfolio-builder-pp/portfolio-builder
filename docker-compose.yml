@@ -63,7 +63,7 @@ services:
     build: .
     depends_on:
       - api
-    command: npm run serve:public
+    command: npm run dev:public
     environment:
       API_BASE_URL: $API_BASE_URL
       CHOKIDAR_USEPOLLING: true # Hot Module Reload (HMR)
