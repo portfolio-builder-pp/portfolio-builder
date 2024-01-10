@@ -22,7 +22,11 @@ async function bootstrap() {
   const port = configService.get('general.port', { infer: true });
   const sessionSecret = configService.get('session.secret', { infer: true });
   const environment = configService.get('general.environment', { infer: true });
+  const dashboardUrl = configService.get('cors.dashboardOrigin', {
+    infer: true,
+  });
 
+  configureCors(app, dashboardUrl);
   configureHelmet(app);
   configureSession(app, sessionSecret);
   configureRoutes(app, port, environment);
@@ -30,6 +34,13 @@ async function bootstrap() {
   await app.listen(port);
 
   Logger.log(`🚀 Application is running on: http://localhost:${port}`);
+}
+
+function configureCors(app: NestExpressApplication, dashboardUrl: string) {
+  app.enableCors({
+    origin: dashboardUrl,
+    credentials: true,
+  });
 }
 
 function configureSession(app: NestExpressApplication, secret: string) {
@@ -49,7 +60,7 @@ function configureSession(app: NestExpressApplication, secret: string) {
 }
 
 function configureHelmet(app: NestExpressApplication) {
-  app.use(helmet());
+  // app.use(helmet());
 
   Logger.log('⚙️ Helmet configured!');
 }

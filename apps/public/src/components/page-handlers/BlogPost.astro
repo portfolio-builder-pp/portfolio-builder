@@ -1,0 +1,18 @@
+---
+import type { BlogPostDto } from '@portfolio-builder/shared-types';
+import { formatDate } from '../../utils';
+
+interface Props {
+  post: BlogPostDto;
+}
+
+const { post } = Astro.props;
+---
+
+<Fragment>
+  <div>
+    <h1>{post.title}</h1>
+    <p>{post.content}</p>
+    <div>{formatDate(post.publishedAt!)}</div>
+  </div>
+</Fragment>

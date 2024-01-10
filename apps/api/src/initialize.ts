@@ -163,9 +163,9 @@ async function populateDatabase(app: NestExpressApplication) {
 
   await blogPostService.create(
     {
-      title: "AI's Future Impact: Transforming Lives",
+      title: 'The Rise of AI Chefs: Cooking Revolutionized',
       description:
-        'Explore the profound influence of artificial intelligence on our daily existence. From healthcare to education, "AI\'s Future Impact: Transforming Lives" delves into the innovations reshaping our world and enhancing the human experience.',
+        'Explore how artificial intelligence is transforming the culinary world. From recipe creation to meal planning, AI is reshaping the way we cook and eat, making gourmet meals accessible to everyone.',
       content: '',
       order: 0,
       status: BlogPostStatus.Draft,
@@ -175,12 +175,108 @@ async function populateDatabase(app: NestExpressApplication) {
 
   await blogPostService.create(
     {
-      title: 'Cooking Made Simple - Kitchen Tips & Recipes',
+      title: 'Sous Vide with a Side of AI: Precision Cooking Unleashed',
       description:
-        'Embark on a culinary journey with "Cooking Made Simple - Kitchen Tips & Recipes." Discover practical kitchen hacks and delectable recipes that simplify your cooking experience, turning every meal into a delightful adventure.',
+        'Delve into the marriage of sous vide cooking and artificial intelligence. Discover how smart algorithms are elevating precision cooking, ensuring consistently delicious results with every dish.',
       content: '',
-      order: 0,
+      order: 1,
+      status: BlogPostStatus.Published,
+    },
+    admin
+  );
+
+  await blogPostService.create(
+    {
+      title: 'AI in the Kitchen: From Ingredient Pairing to Flavor Fusion',
+      description:
+        'Uncover the secrets of AI-powered flavor pairing. Learn how algorithms analyze ingredients, textures, and tastes to create unique and delightful flavor combinations, inspiring innovative culinary creations.',
+      content: '',
+      order: 2,
+      status: BlogPostStatus.Published,
+    },
+    admin
+  );
+
+  await blogPostService.create(
+    {
+      title: 'Cooking in the Cloud: How AI Transforms Home Kitchens',
+      description:
+        'Take a journey into the cloud-connected kitchen. Explore how AI seamlessly integrates with smart appliances, offering personalized cooking experiences, automated grocery shopping, and real-time culinary assistance.',
+      content: '',
+      order: 3,
+      status: BlogPostStatus.Published,
+    },
+    admin
+  );
+
+  await blogPostService.create(
+    {
+      title: 'MasterChef AI Edition: The Future of Culinary Competitions',
+      description:
+        'Dive into the realm of AI-driven cooking competitions. Witness how machines and human chefs collaborate, pushing the boundaries of creativity and culinary excellence in the ultimate gastronomic showdown.',
+      content: '',
+      order: 4,
+      status: BlogPostStatus.Published,
+    },
+    admin
+  );
+
+  await blogPostService.create(
+    {
+      title: 'AI Nutritionist: Customized Meal Plans for a Healthier You',
+      description:
+        'Learn how AI is revolutionizing nutrition by crafting personalized meal plans. Discover how smart algorithms analyze dietary preferences, health goals, and nutritional needs to create balanced and delicious meals.',
+      content: '',
+      order: 5,
+      status: BlogPostStatus.Published,
+    },
+    admin
+  );
+
+  await blogPostService.create(
+    {
+      title: "Digital Taste Test: AI's Role in Recipe Enhancement",
+      description:
+        'Explore how artificial intelligence is enhancing recipes. From optimizing ingredient quantities to suggesting unique twists, AI is revolutionizing the culinary landscape, ensuring your home-cooked meals are always a palate-pleasing experience.',
+      content: '',
+      order: 6,
       status: BlogPostStatus.Draft,
+    },
+    admin
+  );
+
+  await blogPostService.create(
+    {
+      title: 'The AI Pastry Chef: Baking Beyond Boundaries',
+      description:
+        'Indulge in the world of AI-driven baking. Witness how smart algorithms analyze textures, temperatures, and flavors to create mouthwatering pastries. From cupcakes to croissants, let AI redefine your baking experience.',
+      content: '',
+      order: 7,
+      status: BlogPostStatus.Archived,
+    },
+    admin
+  );
+
+  await blogPostService.create(
+    {
+      title: 'Culinary Creativity Unleashed: AI-Generated Recipes',
+      description:
+        'Step into the future of cooking with AI-generated recipes. Explore how machine learning algorithms create innovative and surprising dishes, challenging traditional notions of what can be cooked and enjoyed.',
+      content: '',
+      order: 8,
+      status: BlogPostStatus.Published,
+    },
+    admin
+  );
+
+  await blogPostService.create(
+    {
+      title: 'Smart Kitchen, Happy Cook: How AI Makes Cooking a Breeze',
+      description:
+        'Discover the joys of a smart kitchen powered by AI. From voice-activated assistants to predictive cooking, explore the technologies making cooking more efficient, enjoyable, and accessible for all skill levels.',
+      content: '',
+      order: 9,
+      status: BlogPostStatus.Published,
     },
     admin
   );

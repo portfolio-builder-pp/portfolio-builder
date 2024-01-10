@@ -3,6 +3,7 @@ import {
   idSchema,
   createBlogPostSchema,
   updateBlogPostSchema,
+  blogStatusSchema,
 } from '@portfolio-builder/shared-validation';
 import { BlogPostErrors } from '@portfolio-builder/shared-types';
 import { TrpcService } from '../trpc';
@@ -29,12 +30,14 @@ export class BlogPostRouter {
   }
 
   private findAll() {
-    return this.trpcService.procedure.query(async () => {
-      const blogPosts = await this.blogPostService.findAll();
-      return blogPosts.map((blogPost) =>
-        this.blogPostMapper.toExternalBlogPost(blogPost)
-      );
-    });
+    return this.trpcService.procedure
+      .input(blogStatusSchema)
+      .query(async ({ input: { status } }) => {
+        const blogPosts = await this.blogPostService.findAll(status);
+        return blogPosts.map((blogPost) =>
+          this.blogPostMapper.toExternalBlogPost(blogPost)
+        );
+      });
   }
 
   private findById() {

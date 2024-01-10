@@ -1,0 +1,16 @@
+---
+import BlogPostPreview from "../BlogPostPreview.astro";
+import type { BlogPostDto } from "@portfolio-builder/shared-types";
+
+interface Props {
+  posts: BlogPostDto[];
+}
+
+const { posts } = Astro.props;
+---
+
+<Fragment>
+  <section class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+    {posts.map(post => <BlogPostPreview post={post} />)}
+  </section>
+</Fragment>

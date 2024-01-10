@@ -26,7 +26,7 @@ export class AppService {
       page: this.pageRouter.getRouter(),
       blogPost: this.blogPostRouter.getRouter(),
       contactDetails: this.contactDetailsRuter.getRouter(),
-      globalPropertyRouter: this.globalPropertyRouter.getRouter(),
+      globalProperties: this.globalPropertyRouter.getRouter(),
     });
   }
 }
