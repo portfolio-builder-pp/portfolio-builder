@@ -1,0 +1,87 @@
+---
+import type { BlogPostDto, ContactDetailsDto, PageDto } from '@portfolio-builder/shared-types';
+import { formatDate, slugify } from '../../utils';
+import { join } from 'path';
+
+interface Props {
+  details: ContactDetailsDto;
+}
+
+const { details } = Astro.props;
+
+const hasBaseDetails = Boolean(details.phoneNumber || details.contactEmail);
+const hasAddress = Boolean(
+  details.address?.city || details.address?.country || details.address?.postCode || 
+  details.address?.state || details.address?.streetName || details.address?.streetNumber
+);
+const hasSocialMediaLinks = Boolean(
+  details.socialMediaLinks?.facebook || details.socialMediaLinks?.instagram || details.socialMediaLinks?.onlyfans || 
+  details.socialMediaLinks?.tiktok || details.socialMediaLinks?.twitter || details.socialMediaLinks?.youtube
+);
+
+const countryLine = details.address?.country;
+const cityLine = [details.address?.city, details.address?.postCode, details.address?.state].filter(Boolean).join(' ');
+const streetLine = [details.address?.streetName, details.address?.streetNumber].filter(Boolean).join(' ');
+---
+
+<article class="p-6 border rounded-lg shadow bg-gray-800 border-gray-700">
+  <h5 class="mb-4 text-2xl font-bold tracking-tight text-white">{details.title}</h5>
+  <ul role="list" class="divide-y divide-gray-700">
+    {
+      hasBaseDetails &&
+      <li class="py-3 sm:py-4">
+        { details.phoneNumber && <a href={`tel:${details.phoneNumber}`} class="mb-3 font-normal text-gray-400">{details.phoneNumber}</a>}
+        { details.contactEmail && <a href={`mailto:${details.contactEmail}`} class="mb-3 font-normal text-gray-400">{details.contactEmail}</a>}
+      </li>
+    }
+    { hasAddress &&
+      <li class="py-3 sm:py-4">
+        { countryLine && <p class="mb-3 font-normal text-gray-400">{countryLine}</p>}
+        { cityLine && <p class="mb-3 font-normal text-gray-400">{cityLine}</p>}
+        { streetLine && <p class="mb-3 font-normal text-gray-400">{streetLine}</p>}
+      </li>
+    }
+    {
+      hasSocialMediaLinks &&
+      <li class="py-3 sm:py-4 flex gap-3">
+        { 
+          details.socialMediaLinks?.facebook &&
+          <a href={details.socialMediaLinks?.facebook} class="mb-3 font-normal text-gray-400">
+            <img class="h-8 w-8" src="/social-media/facebook.svg" />
+          </a>
+        }
+        { 
+          details.socialMediaLinks?.instagram &&
+          <a href={details.socialMediaLinks?.instagram} class="mb-3 font-normal text-gray-400">
+            <img class="h-8 w-8" src="/social-media/instagram.svg" />
+          </a>
+        }
+        { 
+          details.socialMediaLinks?.onlyfans &&
+          <a href={details.socialMediaLinks?.onlyfans} class="mb-3 font-normal text-gray-400">
+            <img class="h-8 w-8" src="/social-media/onlyfans.svg" />
+          </a>
+        }
+        { 
+          details.socialMediaLinks?.tiktok &&
+          <a href={details.socialMediaLinks?.tiktok} class="mb-3 font-normal text-gray-400">
+            <img class="h-8 w-8" src="/social-media/tiktok.svg" />
+          </a>
+        }
+        { 
+          details.socialMediaLinks?.twitter &&
+          <a href={details.socialMediaLinks?.twitter} class="mb-3 font-normal text-gray-400">
+            <img class="h-8 w-8" src="/social-media/twitter.svg" />
+          </a>
+        }
+        { 
+          details.socialMediaLinks?.youtube &&
+          <a href={details.socialMediaLinks?.youtube} class="mb-3 font-normal text-gray-400">
+            <img class="h-8 w-8" src="/social-media/youtube.svg" />
+          </a>
+        }
+      </li>
+    }
+  </ul>
+  
+</article>
