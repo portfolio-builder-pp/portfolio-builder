@@ -1,16 +1,17 @@
 ---
-import BlogPostPreview from "../BlogPostPreview.astro";
-import type { BlogPostDto } from "@portfolio-builder/shared-types";
+import BlogPostPreview from "../page-helpers/BlogPostPreview.astro";
+import type { BlogPostDto, PageDto } from "@portfolio-builder/shared-types";
 
 interface Props {
   posts: BlogPostDto[];
+  activePage: PageDto;
 }
 
-const { posts } = Astro.props;
+const { posts, activePage } = Astro.props;
 ---
 
 <Fragment>
   <section class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-    {posts.map(post => <BlogPostPreview post={post} />)}
+    {posts.map(post => <BlogPostPreview activePage={activePage} post={post} />)}
   </section>
 </Fragment>

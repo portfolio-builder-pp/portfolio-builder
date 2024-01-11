@@ -1,5 +1,6 @@
 import type {
   BlogPostDto,
+  ContactDetailsDto,
   PageDto,
   PageType,
   PropertyDto,
@@ -25,11 +26,11 @@ type ExtendedPageProps<T extends Record<string, unknown>> = BasePageProps & T;
 
 export type PageProps =
   | ExtendedPageProps<{
-      pageType:
-        | PageType.Contact
-        | PageType.Custom
-        | PageType.Home
-        | PageType.Portfolio;
+      pageType: PageType.Custom | PageType.Home | PageType.Portfolio;
+    }>
+  | ExtendedPageProps<{
+      pageType: PageType.Contact;
+      contactDetails: ContactDetailsDto[];
     }>
   | ExtendedPageProps<{
       pageType: PageType.Blog;

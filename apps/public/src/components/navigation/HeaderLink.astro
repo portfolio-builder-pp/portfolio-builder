@@ -1,4 +1,5 @@
 ---
+import { join } from 'path';
 import type { NavLink } from '../../types';
 
 interface Props {
@@ -16,11 +17,11 @@ const isActive = normalize(link) === normalize(pathname);
 
 <li>
   <a 
-    href={link}
+    href={join('/', link)}
     class="flex items-center p-2 rounded-lg text-white hover:bg-gray-700 group">
     <span class:list={[
-      "ms-3", 
-      isActive ? "font-bold underline text-purple-600" : ''
+      "ms-3 tracking-widest", 
+      isActive ? "font-bold underline text-purple-500" : ''
     ]}>{ title }</span>
   </a>
 </li>

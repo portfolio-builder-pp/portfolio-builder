@@ -1,6 +1,16 @@
 ---
+import type { ContactDetailsDto } from "@portfolio-builder/shared-types";
+import ContactDetails from "../page-helpers/ContactDetails.astro";
+
+interface Props {
+  contactDetails: ContactDetailsDto[];
+}
+
+const { contactDetails } = Astro.props;
 ---
 
 <Fragment>
-  <h1>Contact</h1>
+  <section class="grid grid-cols-1 gap-4">
+    {contactDetails.map(details => <ContactDetails details={details} />)}
+  </section>
 </Fragment>

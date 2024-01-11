@@ -13,7 +13,7 @@ module.exports = {
     ),
     ...createGlobPatternsForDependencies(__dirname),
   ],
-  safelist: 'font-bold text-purple-600 underline',
+  safelist: 'font-bold text-purple-500 underline',
   theme: {
     extend: {
       fontFamily: {
