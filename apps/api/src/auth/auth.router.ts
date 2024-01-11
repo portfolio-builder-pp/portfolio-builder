@@ -1,6 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { TRPCError } from '@trpc/server';
-import { registerSchema, loginSchema } from '@portfolio-builder/shared-validation';
+import {
+  registerSchema,
+  loginSchema,
+} from '@portfolio-builder/shared-validation';
 import { AuthErrors } from '@portfolio-builder/shared-types';
 import { UserMapper } from '../user';
 import { TrpcService } from '../trpc';
@@ -11,7 +14,7 @@ export class AuthRouter {
   constructor(
     private readonly trpcService: TrpcService,
     private readonly authService: AuthService,
-    private readonly userMapper: UserMapper,
+    private readonly userMapper: UserMapper
   ) {}
 
   public getRouter() {
@@ -45,7 +48,7 @@ export class AuthRouter {
               throw new TRPCError({
                 code: 'BAD_REQUEST',
                 message: 'Something went wrong',
-              })
+              });
             }
           }
         }
@@ -65,13 +68,13 @@ export class AuthRouter {
               throw new TRPCError({
                 code: 'BAD_REQUEST',
                 message: 'Email already in use',
-              })
+              });
             }
             default: {
               throw new TRPCError({
                 code: 'BAD_REQUEST',
                 message: 'Something went wrong',
-              })
+              });
             }
           }
         }
@@ -79,19 +82,17 @@ export class AuthRouter {
   }
 
   private userInfo() {
-    return this.trpcService.authProcedure
-      .query(({ ctx }) => {
-        const { user } = ctx;
-        return this.userMapper.toExternalUser(user);
-      })
+    return this.trpcService.authProcedure.query(({ ctx }) => {
+      const { user } = ctx;
+      return this.userMapper.toExternalUser(user);
+    });
   }
 
   private logout() {
-    return this.trpcService.authProcedure
-      .query(({ ctx }) => {
-        ctx.session.user = null;
+    return this.trpcService.authProcedure.mutation(({ ctx }) => {
+      ctx.session.user = null;
 
-        return true;
-      });
+      return true;
+    });
   }
 }

@@ -32,7 +32,7 @@ export class BlogPostRouter {
   private findAll() {
     return this.trpcService.procedure
       .input(blogStatusSchema)
-      .query(async ({ input: { status } }) => {
+      .query(async ({ input: { status } = {} }) => {
         const blogPosts = await this.blogPostService.findAll(status);
         return blogPosts.map((blogPost) =>
           this.blogPostMapper.toExternalBlogPost(blogPost)
