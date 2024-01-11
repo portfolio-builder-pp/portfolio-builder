@@ -1,14 +1,18 @@
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { LoginPage } from './modules/auth/login-page';
 import { RootPage } from './modules/auth/root-page';
+import { BlogIndexPage } from './modules/blog/pages/Index.page';
 
 export function App() {
   return (
     <Routes>
       <Route path="/login" Component={LoginPage} />
       <Route path="/dashboard" Component={RootPage}>
-        <Route path="blog" element={<div>blog</div>} />
+        <Route path="blog">
+          <Route index Component={BlogIndexPage} />
+        </Route>
       </Route>
+      <Route path="*" element={<Navigate to="/login" />} />
     </Routes>
   );
 }
