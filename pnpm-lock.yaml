@@ -23,6 +23,9 @@ dependencies:
   '@mui/material':
     specifier: ^5.14.20
     version: 5.15.3(@emotion/react@11.11.3)(@emotion/styled@11.11.0)(@types/react@18.2.24)(react-dom@18.2.0)(react@18.2.0)
+  '@mui/x-data-grid':
+    specifier: ^6.18.7
+    version: 6.18.7(@mui/material@5.15.3)(@mui/system@5.15.3)(@types/react@18.2.24)(react-dom@18.2.0)(react@18.2.0)
   '@mui/x-date-pickers':
     specifier: ^6.18.4
     version: 6.18.7(@emotion/react@11.11.3)(@emotion/styled@11.11.0)(@mui/material@5.15.3)(@mui/system@5.15.3)(@types/react@18.2.24)(react-dom@18.2.0)(react@18.2.0)
@@ -3011,6 +3014,28 @@ packages:
       prop-types: 15.8.1
       react: 18.2.0
       react-is: 18.2.0
+    dev: false
+
+  /@mui/x-data-grid@6.18.7(@mui/material@5.15.3)(@mui/system@5.15.3)(@types/react@18.2.24)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-K1A3pMUPxI4/Mt5A4vrK45fBBQK5rZvBVqRMrB5n8zX++Bj+WLWKvLTtfCmlriUtzuadr/Hl7Z+FDRXUJAx6qg==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      '@mui/material': ^5.4.1
+      '@mui/system': ^5.4.1
+      react: ^17.0.0 || ^18.0.0
+      react-dom: ^17.0.0 || ^18.0.0
+    dependencies:
+      '@babel/runtime': 7.23.7
+      '@mui/material': 5.15.3(@emotion/react@11.11.3)(@emotion/styled@11.11.0)(@types/react@18.2.24)(react-dom@18.2.0)(react@18.2.0)
+      '@mui/system': 5.15.3(@emotion/react@11.11.3)(@emotion/styled@11.11.0)(@types/react@18.2.24)(react@18.2.0)
+      '@mui/utils': 5.15.3(@types/react@18.2.24)(react@18.2.0)
+      clsx: 2.1.0
+      prop-types: 15.8.1
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+      reselect: 4.1.8
+    transitivePeerDependencies:
+      - '@types/react'
     dev: false
 
   /@mui/x-date-pickers@6.18.7(@emotion/react@11.11.3)(@emotion/styled@11.11.0)(@mui/material@5.15.3)(@mui/system@5.15.3)(@types/react@18.2.24)(react-dom@18.2.0)(react@18.2.0):
@@ -13316,6 +13341,10 @@ packages:
   /requires-port@1.0.0:
     resolution: {integrity: sha512-KigOCHcocU3XODJxsu8i/j8T9tzT4adHiecwORRQ0ZZFcp7ahwXuRU1m+yuO90C5ZUyGeGfocHDI14M3L3yDAQ==}
     dev: true
+
+  /reselect@4.1.8:
+    resolution: {integrity: sha512-ab9EmR80F/zQTMNeneUr4cv+jSwPJgIlvEmVwLerwrWVbpLlBuls9XHzIeTFy4cegU2NHBp3va0LKOzU5qFEYQ==}
+    dev: false
 
   /resolve-alpn@1.2.1:
     resolution: {integrity: sha512-0a1F4l73/ZFZOakJnQ3FvkJ2+gSTQWz/r2KE5OdDY0TxPm5h4GkqkWWfM47T7HsbnOtcJVEF4epCVy6u7Q3K+g==}
