@@ -20,7 +20,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import ArticleIcon from '@mui/icons-material/Article';
 import { useNavigate } from 'react-router-dom';
 import { trpc } from '../../../../shared/trpc-query';
-import { ContactMail } from '@mui/icons-material';
+import { AccountBox, ContactMail } from '@mui/icons-material';
 
 function Copyright(props: any) {
   return (
@@ -165,6 +165,12 @@ export default function RootLayout(props: React.PropsWithChildren) {
               <ContactMail />
             </ListItemIcon>
             <ListItemText primary="Contact Details" />
+          </ListItemButton>
+          <ListItemButton onClick={() => navigate('/dashboard/user')}>
+            <ListItemIcon>
+              <AccountBox />
+            </ListItemIcon>
+            <ListItemText primary="Users" />
           </ListItemButton>
         </List>
       </Drawer>
