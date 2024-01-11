@@ -13,7 +13,7 @@ export function slugify(str: string) {
 export function formatDate(str: string | Date) {
   const date = new Date(str);
 
-  return date.toLocaleDateString(undefined, {
+  return date.toLocaleDateString('en-US', {
     weekday: 'long',
     year: 'numeric',
     month: 'long',
