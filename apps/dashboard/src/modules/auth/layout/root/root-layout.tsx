@@ -9,7 +9,6 @@ import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-import Badge from '@mui/material/Badge';
 import Container from '@mui/material/Container';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -21,6 +20,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import ArticleIcon from '@mui/icons-material/Article';
 import { useNavigate } from 'react-router-dom';
 import { trpc } from '../../../../shared/trpc-query';
+import { ContactMail } from '@mui/icons-material';
 
 function Copyright(props: any) {
   return (
@@ -132,7 +132,7 @@ export default function RootLayout(props: React.PropsWithChildren) {
             noWrap
             sx={{ flexGrow: 1 }}
           >
-            Dashboard
+            Portfolio Builder
           </Typography>
           <IconButton color="inherit" onClick={() => mutate()}>
             <LogoutIcon />
@@ -159,6 +159,12 @@ export default function RootLayout(props: React.PropsWithChildren) {
               <ArticleIcon />
             </ListItemIcon>
             <ListItemText primary="Blog" />
+          </ListItemButton>
+          <ListItemButton onClick={() => navigate('/dashboard/contact')}>
+            <ListItemIcon>
+              <ContactMail />
+            </ListItemIcon>
+            <ListItemText primary="Contact Details" />
           </ListItemButton>
         </List>
       </Drawer>
