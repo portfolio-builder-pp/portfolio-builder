@@ -5,6 +5,7 @@ import { BlogIndexPage } from './modules/blog/pages/Index.page';
 import { ContactIndexPage } from './modules/contact/pages/Index.page';
 import { UserIndexPage } from './modules/users/pages/Index.page';
 import { BlogCreatePage } from './modules/blog/pages/Create.page';
+import { BlogUpdatePage } from './modules/blog/pages/Update.page';
 
 export function App() {
   return (
@@ -14,6 +15,7 @@ export function App() {
         <Route path="blog">
           <Route index Component={BlogIndexPage} />
           <Route path="create" Component={BlogCreatePage} />
+          <Route path=":id/update" Component={BlogUpdatePage} />
         </Route>
         <Route path="contact">
           <Route index Component={ContactIndexPage} />

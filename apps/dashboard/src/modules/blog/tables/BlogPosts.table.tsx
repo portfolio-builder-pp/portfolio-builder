@@ -3,13 +3,19 @@ import {
   GridColDef,
   GridValueGetterParams,
   GridRenderCellParams,
+  GridActionsCellItem,
 } from '@mui/x-data-grid';
 import { trpc } from '../../../shared/trpc-query';
 import { BlogPostDto, BlogPostStatus } from '@portfolio-builder/shared-types';
-import { Chip } from '@mui/material';
+import Chip from '@mui/material/Chip';
+import EditIcon from '@mui/icons-material/Edit';
+import { NavigateFunction, useNavigate } from 'react-router-dom';
+import { useMemo } from 'react';
 
 export const BlogPostsTable = () => {
+  const navigate = useNavigate();
   const blogPosts = trpc.blogPost.findAll.useQuery();
+  const columns = useMemo(() => getColumns({ navigate }), [navigate]);
   return (
     <DataGrid
       loading={blogPosts.isLoading}
@@ -31,7 +37,11 @@ const dateValueGetter = ({
   value,
 }: GridValueGetterParams<BlogPostDto, string>) => value && new Date(value);
 
-const columns: GridColDef<BlogPostDto>[] = [
+const getColumns = ({
+  navigate,
+}: {
+  navigate: NavigateFunction;
+}): GridColDef<BlogPostDto>[] => [
   {
     field: 'title',
     headerName: 'Title',
@@ -78,6 +88,20 @@ const columns: GridColDef<BlogPostDto>[] = [
     type: 'date',
     width: 150,
     valueGetter: dateValueGetter,
+  },
+  {
+    field: 'actions',
+    type: 'actions',
+    getActions(params) {
+      return [
+        <GridActionsCellItem
+          label="Edit"
+          icon={<EditIcon />}
+          showInMenu
+          onClick={() => navigate(`${params.row.id}/update`)}
+        />,
+      ];
+    },
   },
 ];
 
