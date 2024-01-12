@@ -4,7 +4,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { AccountBox, ContactMail, Article } from '@mui/icons-material';
 import { To, useNavigate } from 'react-router-dom';
-import { ReactNode } from 'react';
+import { Fragment, ReactNode } from 'react';
 import { UserDto, UserRole } from '@portfolio-builder/shared-types';
 import { trpc } from '../../../../shared/trpc-query';
 
@@ -21,10 +21,12 @@ export const NavigationList = () => {
         !item.roles?.includes(
           (userInfo.data as unknown as UserDto).role
         ) ? null : (
-          <ListItemButton onClick={() => navigate(item.to)}>
-            <ListItemIcon>{item.icon}</ListItemIcon>
-            <ListItemText primary={item.title} />
-          </ListItemButton>
+          <Fragment key={typeof item.to === 'string' ? item.to : item.title}>
+            <ListItemButton onClick={() => navigate(item.to)}>
+              <ListItemIcon>{item.icon}</ListItemIcon>
+              <ListItemText primary={item.title} />
+            </ListItemButton>
+          </Fragment>
         )
       )}
     </List>

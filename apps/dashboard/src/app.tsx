@@ -4,6 +4,7 @@ import { RootPage } from './modules/auth/root-page';
 import { BlogIndexPage } from './modules/blog/pages/Index.page';
 import { ContactIndexPage } from './modules/contact/pages/Index.page';
 import { UserIndexPage } from './modules/users/pages/Index.page';
+import { BlogCreatePage } from './modules/blog/pages/Create.page';
 
 export function App() {
   return (
@@ -12,6 +13,7 @@ export function App() {
       <Route path="/dashboard" Component={RootPage}>
         <Route path="blog">
           <Route index Component={BlogIndexPage} />
+          <Route path="create" Component={BlogCreatePage} />
         </Route>
         <Route path="contact">
           <Route index Component={ContactIndexPage} />

@@ -4,8 +4,21 @@ import type { AppRouter } from '@portfolio-builder/api';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { httpBatchLink } from '@trpc/client';
 import { PropsWithChildren, useState } from 'react';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
-export const trpc = createTRPCReact<AppRouter>();
+export const trpc = createTRPCReact<AppRouter>({
+  overrides: {
+    useMutation: {
+      /**
+       * This function is called whenever a `.useMutation` succeeds
+       **/
+      async onSuccess(opts) {
+        await opts.originalFn();
+        await opts.queryClient.invalidateQueries();
+      },
+    },
+  },
+});
 
 export const TRPCQueryProvider = (props: PropsWithChildren) => {
   const [queryClient] = useState(
@@ -13,7 +26,6 @@ export const TRPCQueryProvider = (props: PropsWithChildren) => {
       new QueryClient({
         defaultOptions: {
           queries: {
-            refetchOnMount: false,
             refetchOnWindowFocus: false,
             retry: false,
           },
@@ -39,6 +51,7 @@ export const TRPCQueryProvider = (props: PropsWithChildren) => {
     <trpc.Provider client={trpcClient} queryClient={queryClient}>
       <QueryClientProvider client={queryClient}>
         {props.children}
+        <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </trpc.Provider>
   );
