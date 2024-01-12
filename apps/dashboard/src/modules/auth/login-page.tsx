@@ -51,7 +51,7 @@ export const LoginPage = () => {
         }}
       >
         <Typography component="h1" variant="h5">
-          Zaloguj się
+          Log in
         </Typography>
         <FormContainer<FieldValues>
           resolver={zodResolver(schema)}
@@ -62,7 +62,7 @@ export const LoginPage = () => {
             margin="normal"
             variant="standard"
             name="email"
-            label="Adres e-mail"
+            label="Email address"
             type="email"
             required
             fullWidth
@@ -71,7 +71,7 @@ export const LoginPage = () => {
             margin="normal"
             name="password"
             variant="standard"
-            label="Hasło"
+            label="Password"
             type="password"
             required
             fullWidth
@@ -82,7 +82,7 @@ export const LoginPage = () => {
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
-            Zaloguj się
+            Log in
           </Button>
         </FormContainer>
       </Box>
