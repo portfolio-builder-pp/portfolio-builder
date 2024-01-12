@@ -54,7 +54,7 @@ const columns: GridColDef<UserDto>[] = [
   },
 ];
 
-const roleNames: Record<UserRole, string> = {
+export const roleNames: Record<UserRole, string> = {
   [UserRole.Admin]: 'Admin',
   [UserRole.Moderator]: 'Moderator',
 };
