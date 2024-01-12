@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './app';
 
 import './styles.scss';
+import 'react-quill/dist/quill.snow.css';
 import { TRPCQueryProvider } from './shared/trpc-query';
 import { ScopedCssBaseline } from '@mui/material';
 

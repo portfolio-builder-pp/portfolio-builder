@@ -81,7 +81,7 @@ const columns: GridColDef<BlogPostDto>[] = [
   },
 ];
 
-const statusNames: Record<BlogPostStatus, string> = {
+export const statusNames: Record<BlogPostStatus, string> = {
   [BlogPostStatus.Draft]: 'Draft',
   [BlogPostStatus.Archived]: 'Archived',
   [BlogPostStatus.Published]: 'Published',

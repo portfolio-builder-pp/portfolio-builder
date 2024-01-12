@@ -20,7 +20,9 @@ export class BlogPost implements BlogPostDto {
   @Column()
   description: string;
 
-  @Column()
+  @Column({
+    type: 'text',
+  })
   content: string;
 
   @Column()
