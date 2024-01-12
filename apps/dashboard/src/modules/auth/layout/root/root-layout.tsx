@@ -1,28 +1,20 @@
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
-import Typography from '@mui/material/Typography';
+import Typography, { TypographyProps } from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Container from '@mui/material/Container';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
 import MuiLink from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import LogoutIcon from '@mui/icons-material/Logout';
-import ArticleIcon from '@mui/icons-material/Article';
-import { useNavigate } from 'react-router-dom';
-import { trpc } from '../../../../shared/trpc-query';
-import { AccountBox, ContactMail } from '@mui/icons-material';
+import { NavigationList } from './navigation-list';
+import { LogoutAction } from './logout-action';
 
-function Copyright(props: any) {
+function Copyright(props: TypographyProps) {
   return (
     <Typography
       variant="body2"
@@ -92,21 +84,12 @@ const Drawer = styled(MuiDrawer, {
 
 export default function RootLayout(props: React.PropsWithChildren) {
   const [open, setOpen] = React.useState(true);
-  const navigate = useNavigate();
-  const utils = trpc.useUtils();
-  const { mutate } = trpc.auth.logout.useMutation({
-    async onSuccess() {
-      await utils.auth.userInfo.invalidate();
-    },
-  });
-
   const toggleDrawer = () => {
     setOpen(!open);
   };
 
   return (
     <Box sx={{ display: 'flex' }}>
-      <CssBaseline />
       <AppBar position="absolute" open={open}>
         <Toolbar
           sx={{
@@ -134,9 +117,7 @@ export default function RootLayout(props: React.PropsWithChildren) {
           >
             Portfolio Builder
           </Typography>
-          <IconButton color="inherit" onClick={() => mutate()}>
-            <LogoutIcon />
-          </IconButton>
+          <LogoutAction />
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
@@ -153,26 +134,7 @@ export default function RootLayout(props: React.PropsWithChildren) {
           </IconButton>
         </Toolbar>
         <Divider />
-        <List component="nav">
-          <ListItemButton onClick={() => navigate('/dashboard/blog')}>
-            <ListItemIcon>
-              <ArticleIcon />
-            </ListItemIcon>
-            <ListItemText primary="Blog" />
-          </ListItemButton>
-          <ListItemButton onClick={() => navigate('/dashboard/contact')}>
-            <ListItemIcon>
-              <ContactMail />
-            </ListItemIcon>
-            <ListItemText primary="Contact Details" />
-          </ListItemButton>
-          <ListItemButton onClick={() => navigate('/dashboard/user')}>
-            <ListItemIcon>
-              <AccountBox />
-            </ListItemIcon>
-            <ListItemText primary="Users" />
-          </ListItemButton>
-        </List>
+        <NavigationList />
       </Drawer>
       <Box
         component="main"
