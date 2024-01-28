@@ -25,6 +25,14 @@ export const UserForm = (props: UserForm) => {
       <Button type="submit">Submit</Button>
       <TextFieldElement
         margin="normal"
+        name="email"
+        label="Email"
+        type="email"
+        required
+        fullWidth
+      />
+      <TextFieldElement
+        margin="normal"
         name="firstName"
         label="First name"
         required
