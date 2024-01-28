@@ -20,18 +20,11 @@ export const ContactForm = (props: ContactForm) => {
       resolver={zodResolver(schema)}
     >
       <Button type="submit">Submit</Button>
-      <TextFieldElement
-        margin="normal"
-        name="title"
-        label="Title"
-        required
-        fullWidth
-      />
+      <TextFieldElement margin="normal" name="title" label="Title" fullWidth />
       <TextFieldElement
         margin="normal"
         name="phoneNumber"
         label="Phone number"
-        required
         fullWidth
       />
       <TextFieldElement
@@ -39,7 +32,6 @@ export const ContactForm = (props: ContactForm) => {
         name="contactEmail"
         label="Contact email"
         type="email"
-        required
         fullWidth
       />
       <h1>Address</h1>
@@ -47,42 +39,36 @@ export const ContactForm = (props: ContactForm) => {
         margin="normal"
         name="address.country"
         label="Country"
-        required
         fullWidth
       />
       <TextFieldElement
         margin="normal"
         name="address.state"
         label="State"
-        required
         fullWidth
       />
       <TextFieldElement
         margin="normal"
         name="address.postCode"
         label="Post code"
-        required
         fullWidth
       />
       <TextFieldElement
         margin="normal"
         name="address.city"
         label="City"
-        required
         fullWidth
       />
       <TextFieldElement
         margin="normal"
         name="address.streetName"
         label="Street name"
-        required
         fullWidth
       />
       <TextFieldElement
         margin="normal"
         name="address.streetNumber"
         label="Street number"
-        required
         fullWidth
       />
       <h1>Social media links</h1>
@@ -90,42 +76,36 @@ export const ContactForm = (props: ContactForm) => {
         margin="normal"
         name="socialMediaLinks.instagram"
         label="Instagram"
-        required
         fullWidth
       />
       <TextFieldElement
         margin="normal"
         name="socialMediaLinks.twitter"
         label="Twitter"
-        required
         fullWidth
       />
       <TextFieldElement
         margin="normal"
         name="socialMediaLinks.facebook"
         label="Facebook"
-        required
         fullWidth
       />
       <TextFieldElement
         margin="normal"
         name="socialMediaLinks.youtube"
         label="Youtube"
-        required
         fullWidth
       />
       <TextFieldElement
         margin="normal"
         name="socialMediaLinks.tiktok"
         label="Tiktok"
-        required
         fullWidth
       />
       <TextFieldElement
         margin="normal"
         name="socialMediaLinks.onlyfans"
         label="Onlyfans"
-        required
         fullWidth
       />
     </FormContainer>

@@ -28,21 +28,18 @@ export const UserForm = (props: UserForm) => {
         name="email"
         label="Email"
         type="email"
-        required
         fullWidth
       />
       <TextFieldElement
         margin="normal"
         name="firstName"
         label="First name"
-        required
         fullWidth
       />
       <TextFieldElement
         margin="normal"
         name="lastName"
         label="Last name"
-        required
         fullWidth
       />
       <TextFieldElement
@@ -50,10 +47,15 @@ export const UserForm = (props: UserForm) => {
         name="password"
         label="Password"
         type="password"
-        required
         fullWidth
       />
-      <SelectElement margin="normal" name="role" options={roleOptions} />
+      <SelectElement
+        margin="normal"
+        name="role"
+        label="Role"
+        fullWidth
+        options={roleOptions}
+      />
     </FormContainer>
   );
 };
