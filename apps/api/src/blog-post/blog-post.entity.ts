@@ -21,7 +21,7 @@ export class BlogPost implements BlogPostDto {
   description: string;
 
   @Column({
-    type: 'text',
+    type: 'longtext',
   })
   content: string;
 
