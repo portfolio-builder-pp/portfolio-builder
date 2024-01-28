@@ -9,10 +9,9 @@ interface Props {
 const { post } = Astro.props;
 ---
 
-<Fragment>
-  <div>
-    <h1>{post.title}</h1>
-    <p>{post.content}</p>
-    <div>{formatDate(post.publishedAt!)}</div>
-  </div>
-</Fragment>
+<article class="p-6 border rounded-lg shadow bg-gray-800 border-gray-700">
+  <h5 class="mb-4 text-2xl font-bold tracking-tight text-white">{post.title}</h5>
+  <p class="mb-3 font-normal">by: {post.author.firstName} {post.author.lastName}</p>
+  <p class="mb-3 font-normal text-purple-200">{formatDate(post.publishedAt!)}</p>
+  <section set:html={post.content}></section>
+</article>
