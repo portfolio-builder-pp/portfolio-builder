@@ -11,6 +11,9 @@ import { BlogCreatePage } from './modules/blog/pages/Create.page';
 import { BlogUpdatePage } from './modules/blog/pages/Update.page';
 import { PortfolioIndexPage } from './modules/portfolio/pages/Index.page';
 import { PropertyIndexPage } from './modules/properties/pages/Index.page';
+import { PageIndexPage } from './modules/page/pages/Index.page';
+import { PageCreatePage } from './modules/page/pages/Create.page';
+import { PageUpdatePage } from './modules/page/pages/Update.page';
 
 export function App() {
   return (
@@ -21,6 +24,11 @@ export function App() {
           <Route index Component={BlogIndexPage} />
           <Route path="create" Component={BlogCreatePage} />
           <Route path=":id/update" Component={BlogUpdatePage} />
+        </Route>
+        <Route path="page">
+          <Route index Component={PageIndexPage} />
+          <Route path="create" Component={PageCreatePage} />
+          <Route path=":id/update" Component={PageUpdatePage} />
         </Route>
         <Route path="contact">
           <Route index Component={ContactIndexPage} />

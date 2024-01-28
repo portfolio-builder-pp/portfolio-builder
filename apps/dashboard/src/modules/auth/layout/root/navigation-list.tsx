@@ -8,6 +8,7 @@ import {
   Article,
   HistoryEdu,
   AddBox,
+  Web,
 } from '@mui/icons-material';
 import { To, useNavigate } from 'react-router-dom';
 import { Fragment, ReactNode } from 'react';
@@ -47,6 +48,12 @@ interface NavigationListItem {
 }
 
 const navigationListItems: NavigationListItem[] = [
+  {
+    icon: <Web />,
+    title: 'Page',
+    to: '/dashboard/page',
+    roles: [UserRole.Admin, UserRole.Moderator],
+  },
   {
     icon: <Article />,
     title: 'Blog',
