@@ -30,8 +30,8 @@ const streetLine = [details.address?.streetName, details.address?.streetNumber].
     {
       hasBaseDetails &&
       <li class="py-3 sm:py-4">
-        { details.phoneNumber && <a href={`tel:${details.phoneNumber}`} class="mb-3 font-normal text-gray-400">{details.phoneNumber}</a>}
-        { details.contactEmail && <a href={`mailto:${details.contactEmail}`} class="mb-3 font-normal text-gray-400">{details.contactEmail}</a>}
+        { details.phoneNumber && <a href={`tel:${details.phoneNumber}`} class="mb-3 font-normal text-gray-400 hover:underline">{details.phoneNumber}</a>}
+        { details.contactEmail && <a href={`mailto:${details.contactEmail}`} class="mb-3 font-normal text-gray-400 hover:underline">{details.contactEmail}</a>}
       </li>
     }
     { hasAddress &&
