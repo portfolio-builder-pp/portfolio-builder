@@ -20,7 +20,7 @@ export function ContactUpdatePage() {
   });
 
   if (status === 'loading') return null;
-  if (status === 'error' || !data) return <div>błąd pobierania</div>;
+  if (status === 'error' || !data) return <div>Error while loading data</div>;
 
   const defaultValues: FieldValues = {
     title: data.title,
