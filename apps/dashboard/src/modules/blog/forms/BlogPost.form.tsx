@@ -25,23 +25,22 @@ export const BlogPostForm = (props: BlogPostForm) => {
       resolver={zodResolver(schema)}
     >
       <Button type="submit">Submit</Button>
-      <TextFieldElement
-        margin="normal"
-        name="title"
-        label="Title"
-        required
-        fullWidth
-      />
+      <TextFieldElement margin="normal" name="title" label="Title" fullWidth />
       <TextFieldElement
         margin="normal"
         name="description"
         label="Description"
-        required
         fullWidth
         multiline
         minRows={5}
       />
-      <SelectElement margin="normal" name="status" options={statusOptions} />
+      <SelectElement
+        margin="normal"
+        name="status"
+        label="Status"
+        fullWidth
+        options={statusOptions}
+      />
       <Controller
         name="content"
         render={({ field, fieldState, formState }) => {
@@ -52,6 +51,24 @@ export const BlogPostForm = (props: BlogPostForm) => {
                 value={field.value}
                 onChange={field.onChange}
                 onBlur={field.onBlur}
+                modules={{
+                  toolbar: [
+                    ['bold', 'italic', 'underline', 'strike'],
+                    ['blockquote', 'code-block', 'image'],
+
+                    [{ list: 'ordered' }, { list: 'bullet' }],
+                    [{ indent: '-1' }, { indent: '+1' }],
+
+                    [{ size: ['small', false, 'large', 'huge'] }],
+                    [{ header: [1, 2, 3, 4, 5, 6, false] }],
+
+                    [{ color: [] }, { background: [] }],
+                    [{ font: [] }],
+                    [{ align: [] }],
+
+                    ['clean'],
+                  ],
+                }}
               />
               <FormHelperText />
             </>
