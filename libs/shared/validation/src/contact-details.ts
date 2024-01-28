@@ -13,7 +13,7 @@ export const contactDetailsSchema = z
     title: z.string().trim().min(1),
     order: z.number(),
     phoneNumber: z.string().trim().optional(),
-    contactEmail: z.string().trim().email().optional(),
+    contactEmail: z.string().trim().email().optional().or(z.literal('')),
   })
   .merge(idSchema)
   .extend({
