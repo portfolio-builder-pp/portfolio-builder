@@ -26,7 +26,7 @@ export const LoginPage = () => {
   });
 
   if (userInfo.status === 'loading') return null;
-  if (userInfo.status === 'success') return <Navigate to="/dashboard" />;
+  if (userInfo.status === 'success') return <Navigate to="/dashboard/page" />;
 
   const onSubmit: SubmitHandler<FieldValues> = (values) => {
     mutate(values);
