@@ -3,8 +3,6 @@ import '@fontsource/poppins';
 import Nav from '../components/navigation/SideNav.astro';
 import type { NavLink } from '../types';
 
-// const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-
 interface Props {
 	title: string;
 	description: string;
@@ -25,8 +23,7 @@ const { title, description, navLinks, appName, appDescription } = Astro.props;
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 
-		<!-- Canonical URL -->
-		<!-- <link rel="canonical" href={canonicalURL} /> -->
+		<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 
 		<!-- Primary Meta Tags -->
 		<title>{title}</title>

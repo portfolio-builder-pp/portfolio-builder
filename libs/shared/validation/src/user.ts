@@ -37,5 +37,6 @@ export const loginSchema = internalUserSchema
 export const registerSchema = internalUserSchema
   .omit({
     id: true,
+    blogPosts: true,
   })
   .strip() satisfies ZodType<RegisterDto>;

@@ -1,21 +1,21 @@
-import { BlogPostForm, FieldValues } from '../forms/BlogPost.form';
+import { PageForm, FieldValues } from '../forms/Page.form';
 import { trpc } from '../../../shared/trpc-query';
 import { useNavigate, useParams } from 'react-router-dom';
-import { UpdateBlogPostDto } from '@portfolio-builder/shared-types';
+import { UpdatePageDto } from '@portfolio-builder/shared-types';
 
-export function BlogUpdatePage() {
+export function PageUpdatePage() {
   const { id } = useParams<'id'>();
   const navigate = useNavigate();
   if (!id) return null;
 
-  const { data, status } = trpc.blogPost.findById.useQuery(
+  const { data, status } = trpc.page.findById.useQuery(
     { id: id },
     { enabled: !!id }
   );
 
-  const { mutateAsync } = trpc.blogPost.update.useMutation({
+  const { mutateAsync } = trpc.page.update.useMutation({
     onSuccess() {
-      navigate('/dashboard/blog');
+      navigate('/dashboard/page');
     },
   });
 
@@ -23,18 +23,22 @@ export function BlogUpdatePage() {
   if (status === 'error' || !data) return <div>Error while loading data</div>;
 
   const defaultValues: FieldValues = {
-    content: data.content,
-    description: data.description,
+    name: data.name,
+    slug: data.slug,
     order: data.order,
-    status: data.status,
-    title: data.title,
+    enabled: data.enabled,
+    type: data.type,
+    sections: data.sections,
+    properties: data.properties,
+    seoTitle: data.seoTitle,
+    seoDescription: data.seoDescription,
   };
 
   return (
-    <BlogPostForm
+    <PageForm
       defaultValues={defaultValues}
       onSubmit={async (values) => {
-        const payload: UpdateBlogPostDto = {
+        const payload: UpdatePageDto = {
           id,
           details: {
             ...values,

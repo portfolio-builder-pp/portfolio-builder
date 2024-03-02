@@ -2,7 +2,14 @@ import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import { AccountBox, ContactMail, Article } from '@mui/icons-material';
+import {
+  AccountBox,
+  ContactMail,
+  Article,
+  HistoryEdu,
+  AddBox,
+  Web,
+} from '@mui/icons-material';
 import { To, useNavigate } from 'react-router-dom';
 import { Fragment, ReactNode } from 'react';
 import { UserDto, UserRole } from '@portfolio-builder/shared-types';
@@ -42,6 +49,12 @@ interface NavigationListItem {
 
 const navigationListItems: NavigationListItem[] = [
   {
+    icon: <Web />,
+    title: 'Page',
+    to: '/dashboard/page',
+    roles: [UserRole.Admin, UserRole.Moderator],
+  },
+  {
     icon: <Article />,
     title: 'Blog',
     to: '/dashboard/blog',
@@ -51,6 +64,18 @@ const navigationListItems: NavigationListItem[] = [
     icon: <ContactMail />,
     title: 'Contact Details',
     to: '/dashboard/contact',
+    roles: [UserRole.Admin, UserRole.Moderator],
+  },
+  {
+    icon: <HistoryEdu />,
+    title: 'Portfolio',
+    to: '/dashboard/portfolio',
+    roles: [UserRole.Admin, UserRole.Moderator],
+  },
+  {
+    icon: <AddBox />,
+    title: 'Properties',
+    to: '/dashboard/property',
     roles: [UserRole.Admin, UserRole.Moderator],
   },
   {

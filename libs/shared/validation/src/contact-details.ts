@@ -12,8 +12,8 @@ export const contactDetailsSchema = z
   .object({
     title: z.string().trim().min(1),
     order: z.number(),
-    phoneNumber: z.string().trim().optional(),
-    contactEmail: z.string().trim().email().optional(),
+    phoneNumber: z.string().trim().optional().or(z.literal('')),
+    contactEmail: z.string().trim().email().optional().or(z.literal('')),
   })
   .merge(idSchema)
   .extend({

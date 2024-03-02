@@ -1,0 +1,3 @@
+export function PortfolioIndexPage() {
+  return <></>;
+}

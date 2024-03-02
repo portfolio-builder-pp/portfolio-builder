@@ -41,6 +41,8 @@ function configureCors(app: NestExpressApplication, dashboardUrl: string) {
     origin: dashboardUrl,
     credentials: true,
   });
+
+  Logger.log(`⚙️ CORS configured for: ${dashboardUrl}!`);
 }
 
 function configureSession(app: NestExpressApplication, secret: string) {
