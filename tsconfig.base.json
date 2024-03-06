@@ -1,6 +1,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "strictNullChecks": true,
     "rootDir": ".",
     "sourceMap": true,
     "declaration": false,
@@ -15,11 +16,13 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@portfolio-builder/shared-ui": ["libs/shared/ui/src/index.ts"]
+      "@portfolio-builder/api": ["apps/api/src/index.ts"],
+      "@portfolio-builder/shared-types": ["libs/shared/types/src/index.ts"],
+      "@portfolio-builder/shared-ui": ["libs/shared/ui/src/index.ts"],
+      "@portfolio-builder/shared-validation": [
+        "libs/shared/validation/src/index.ts"
+      ]
     }
   },
-  "exclude": ["node_modules", "tmp"],
-  "paths": {
-    "@portfolio-builder/shared-ui": ["libs/shared/ui/src/index.ts"]
-  }
+  "exclude": ["node_modules", "tmp"]
 }

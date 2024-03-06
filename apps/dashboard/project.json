@@ -3,7 +3,7 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/dashboard/src",
   "projectType": "application",
-  "implicitDependencies": ["server", "shared-ui"],
+  "implicitDependencies": ["api", "shared-ui"],
   "targets": {
     "build": {
       "executor": "@nx/vite:build",

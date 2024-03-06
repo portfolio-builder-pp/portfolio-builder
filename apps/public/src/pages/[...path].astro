@@ -1,0 +1,115 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Blog from '../components/page-handlers/Blog.astro';
+import BlogPost from '../components/page-handlers/BlogPost.astro';
+import Contact from '../components/page-handlers/Contact.astro';
+import Custom from '../components/page-handlers/Custom.astro';
+import Home from '../components/page-handlers/Home.astro';
+import Portfolio from '../components/page-handlers/Portfolio.astro';
+import { join } from 'path';
+import { TRPCClient } from '../client';
+import { slugify } from '../utils';
+import { ExtendedPageType, type PageProps, NavLink, PropertyMap } from '../types';
+import { BlogPostStatus, PageType, PropertyDto, PropertyName } from '@portfolio-builder/shared-types';
+
+interface Params {
+  path: string | undefined;
+}
+
+interface Route {
+  params: Params;
+  props: PageProps;
+}
+
+interface ReduceRoutes {
+  baseRoutes: Route[],
+  extendedRoutes: Route[],
+}
+
+export async function getStaticPaths(): Promise<Route[]> {
+  const combineProperties = (globalProperties: PropertyDto[], localProperties: PropertyDto[]): PropertyMap => {
+    const propertyMap = new Map(
+      globalProperties.map(property => [property.name, property]),
+    );
+
+    localProperties.forEach(
+      property => propertyMap.set(property.name, property),
+    );
+
+    return propertyMap;
+  }
+
+  const pages = await TRPCClient.page.findAll.query();
+  const blogPosts = await TRPCClient.blogPost.findAll.query({ status: BlogPostStatus.Published });
+  const globalProperties = await TRPCClient.globalProperties.findAll.query();
+  const contactDetails = (await TRPCClient.contactDetails.findAll.query()).sort((cd1, cd2) => cd1.order - cd2.order);
+
+  const { baseRoutes, extendedRoutes } = pages
+    .filter(({ enabled }) => enabled)
+    .sort((page1, page2) => page1.order - page2.order)
+    .reduce<ReduceRoutes>((acc, page) => {
+      const basePath = page.slug || undefined;
+
+      const pageProperties = combineProperties(globalProperties, page.properties);
+
+      switch (page.type) {
+        case PageType.Custom:
+        case PageType.Home:
+        case PageType.Portfolio:
+          return {
+            ...acc,
+            baseRoutes: [...acc.baseRoutes, { 
+              params: { path: basePath },
+              props: { page, pageType: page.type, navLinks: [], properties: pageProperties },
+            }],
+          }
+        case PageType.Contact:
+          return {
+            ...acc,
+            baseRoutes: [...acc.baseRoutes, { 
+              params: { path: basePath },
+              props: { page, pageType: page.type, navLinks: [], properties: pageProperties, contactDetails },
+            }],
+          }
+        case PageType.Blog:
+          return {
+            baseRoutes: [...acc.baseRoutes, { 
+              params: { path: basePath },
+              props: { page, pageType: page.type, posts: blogPosts, navLinks: [], properties: pageProperties },
+            }],
+            extendedRoutes: [
+              ...acc.extendedRoutes,
+              ...blogPosts.map<Route>((post) => ({
+                params: { path: join(page.slug, slugify(post.title), post.id).replaceAll('\\', '/') },
+                props: { page, pageType: ExtendedPageType.BlogPost, post, navLinks: [], properties: pageProperties },
+              })),
+            ]
+          }
+        default:
+          return acc;
+      }
+    }, {
+      baseRoutes: [],
+      extendedRoutes: [],
+    });
+
+  const navLinks: NavLink[] = baseRoutes.map(({ params: { path }, props: { page }}) => ({ title: page.name, link: path || '/' }));
+
+  return [...baseRoutes, ...extendedRoutes].map(route => ({ ...route, props: { ...route.props, navLinks }}));
+}
+
+const props = Astro.props as PageProps;
+---
+<BaseLayout
+  navLinks={props.navLinks} 
+  title={props.page.seoTitle || ''} 
+  description={props.page.seoDescription || ''} 
+  appName={props.properties.get(PropertyName.AppName)?.value ?? ''}
+  appDescription={props.properties.get(PropertyName.AppDescription)?.value ?? ''}>
+  { props.pageType === ExtendedPageType.BlogPost && <BlogPost  post={props.post} /> }
+  { props.pageType === PageType.Blog &&             <Blog      posts={props.posts} activePage={props.page} /> }
+  { props.pageType === PageType.Contact &&          <Contact   contactDetails={props.contactDetails} /> }
+  { props.pageType === PageType.Custom &&           <Custom    /> }
+  { props.pageType === PageType.Home &&             <Home      /> }
+  { props.pageType === PageType.Portfolio &&        <Portfolio /> }
+</BaseLayout>

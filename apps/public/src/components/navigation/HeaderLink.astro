@@ -1,0 +1,27 @@
+---
+import { join } from 'path';
+import type { NavLink } from '../../types';
+
+interface Props {
+  navLink: NavLink,
+}
+
+const { navLink } = Astro.props;
+const { pathname } = Astro.url;
+const { link, title } = navLink;
+
+const normalize = (path: string) => path.replace(/\/$/, '').replace(/^\//, '');
+
+const isActive = normalize(link) === normalize(pathname);
+---
+
+<li>
+  <a 
+    href={join('/', link)}
+    class="flex items-center p-2 rounded-lg text-white hover:bg-gray-700 group">
+    <span class:list={[
+      "ms-3 tracking-widest", 
+      isActive ? "font-bold underline text-purple-500" : ''
+    ]}>{ title }</span>
+  </a>
+</li>

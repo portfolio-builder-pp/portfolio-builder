@@ -1,0 +1,27 @@
+---
+import type { NavLink } from '../../types';
+import HeaderLink from './HeaderLink.astro';
+
+interface Props {
+  navLinks: NavLink[];
+  appName?: string;
+  appDescription?: string;
+}
+
+const { navLinks, appName, appDescription } = Astro.props;
+---
+
+<aside class="sm:fixed top-0 left-0 z-40 sm:w-80 sm:h-screen" aria-label="Sidebar">
+   <div class="h-full px-3 py-4 overflow-y-auto bg-gray-800 space-y-4">
+      <article class="space-y-2 p-5 text-white">
+        { appName && <h1 class="text-4xl font-extrabold dark:text-white">{appName}</h1> }
+        { appDescription && <p>{appDescription}</p> }
+      </article>
+
+      <ul class="space-y-2 font-medium">
+        {
+          navLinks.map(navLink => <HeaderLink navLink={navLink} />)
+        }
+      </ul>
+   </div>
+</aside>

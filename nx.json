@@ -25,6 +25,9 @@
     "e2e": {
       "cache": true,
       "inputs": ["default", "^production"]
+    },
+    "check": {
+      "inputs": ["production", "^production"]
     }
   },
   "namedInputs": {
@@ -58,5 +61,7 @@
         "unitTestRunner": "vitest"
       }
     }
-  }
+  },
+  "plugins": ["@nxtensions/astro"],
+  "defaultProject": "public"
 }
