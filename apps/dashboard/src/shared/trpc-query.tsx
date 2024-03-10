@@ -36,7 +36,9 @@ export const TRPCQueryProvider = (props: PropsWithChildren) => {
     trpc.createClient({
       links: [
         httpBatchLink({
-          url: 'http://localhost:3000/trpc',
+          url: `${import.meta.env.VITE_API_BASE_URL}:${
+            import.meta.env.VITE_API_PORT
+          }/trpc`,
           fetch(url, options) {
             return fetch(url, {
               ...options,

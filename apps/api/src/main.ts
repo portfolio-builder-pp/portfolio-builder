@@ -25,8 +25,9 @@ async function bootstrap() {
   const dashboardUrl = configService.get('cors.dashboardOrigin', {
     infer: true,
   });
+  const publicUrl = configService.get('cors.publicOrigin', { infer: true });
 
-  configureCors(app, dashboardUrl);
+  configureCors(app, dashboardUrl, publicUrl);
   configureHelmet(app);
   configureSession(app, sessionSecret);
   configureRoutes(app, port, environment);
@@ -36,13 +37,13 @@ async function bootstrap() {
   Logger.log(`🚀 Application is running on: http://localhost:${port}`);
 }
 
-function configureCors(app: NestExpressApplication, dashboardUrl: string) {
+function configureCors(app: NestExpressApplication, ...origins: string[]) {
   app.enableCors({
-    origin: dashboardUrl,
+    origin: origins,
     credentials: true,
   });
 
-  Logger.log(`⚙️ CORS configured for: ${dashboardUrl}!`);
+  Logger.log(`⚙️ CORS configured for: ${origins.join(', ')}!`);
 }
 
 function configureSession(app: NestExpressApplication, secret: string) {

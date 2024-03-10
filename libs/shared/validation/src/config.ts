@@ -7,7 +7,7 @@ export const configSchema = z
   .object({
     // General
     NODE_ENV: z.nativeEnum(Environments),
-    PORT: z.string().regex(numberRegex).optional(),
+    API_PORT: z.string().regex(numberRegex).optional(),
     // Database
     DB_HOST: z.string().min(1),
     DB_PORT: z.string().regex(numberRegex).optional(),
