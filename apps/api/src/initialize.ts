@@ -302,8 +302,8 @@ async function populateDatabase(app: NestExpressApplication) {
     address: {
       country: 'Polska',
       state: 'Wielkopolska',
-      city: 'Poznań',
-      streetName: 'plac Marii Skłodowskiej-Curie',
+      city: 'Poznan',
+      streetName: 'plac Marii Sklodowskiej-Curie',
       streetNumber: '5',
       postCode: '60-965',
     },
