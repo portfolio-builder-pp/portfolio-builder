@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 // https://astro.build/config
 export default defineConfig({
   outDir: '../../dist/apps/public',
-  server: { port: +process.env.PORT || 4200 },
+  server: { port: +process.env.PUBLIC_PORT || 4200 },
   integrations: [
     tailwind({
       configFile: fileURLToPath(

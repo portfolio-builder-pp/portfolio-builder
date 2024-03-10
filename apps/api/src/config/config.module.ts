@@ -7,13 +7,18 @@ import { corsConfigLoader, databaseConfigLoader, generalConfigLoader, sessionCon
   imports: [
     NestConfigModule.forRoot({
       isGlobal: true,
-      load: [generalConfigLoader, databaseConfigLoader, sessionConfigLoader, corsConfigLoader],
-      validate: config => configSchema.parse(config),
+      load: [
+        generalConfigLoader,
+        databaseConfigLoader,
+        sessionConfigLoader,
+        corsConfigLoader,
+      ],
+      validate: (config) => configSchema.parse(config),
       validationOptions: {
         allowUnknown: false,
         abortEarly: true,
-      }
-    })
-  ]
+      },
+    }),
+  ],
 })
 export class ConfigModule {}

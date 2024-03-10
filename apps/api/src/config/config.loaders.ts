@@ -8,8 +8,11 @@ const createConfigLoader = <T extends keyof AppConfig>(token: T, config: AppConf
   registerAs(token, () => config);
 
 export const generalConfigLoader = createConfigLoader('general', {
-  environment: getEnvProperty('NODE_ENV', Environments.Development) as Environments,
-  port: parseInt(getEnvProperty('PORT', '3000'), 10),
+  environment: getEnvProperty(
+    'NODE_ENV',
+    Environments.Development
+  ) as Environments,
+  port: parseInt(getEnvProperty('API_PORT', '3000'), 10),
 });
 
 export const databaseConfigLoader = createConfigLoader('database', {
